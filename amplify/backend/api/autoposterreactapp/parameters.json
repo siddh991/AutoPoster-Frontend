@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "autoposterreactapp",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authautoposterreactappb4bb870d",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2023-10-17T22:40:04.735Z"
+}

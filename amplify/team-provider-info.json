@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-autoposterreactapp-dev-163316-authRole",
+      "UnauthRoleArn": "arn:aws:iam::365282314190:role/amplify-autoposterreactapp-dev-163316-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::365282314190:role/amplify-autoposterreactapp-dev-163316-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
+      "UnauthRoleName": "amplify-autoposterreactapp-dev-163316-unauthRole",
+      "StackName": "amplify-autoposterreactapp-dev-163316",
+      "StackId": "arn:aws:cloudformation:us-east-2:365282314190:stack/amplify-autoposterreactapp-dev-163316/3fe9aef0-5420-11ee-ad1b-0a161cc6b883",
+      "AmplifyAppId": "d2fcbi6160utku"
+    },
+    "categories": {
+      "auth": {
+        "autoposterreactappb4bb870d": {}
+      },
+      "function": {
+        "api": {
+          "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
+          "s3Key": "amplify-builds/api-4d754d77566e59696573-build.zip"
+        }
+      },
+      "api": {
+        "autoposterreactapp": {}
+      },
+      "storage": {
+        "mediaStorage2": {}
+      }
+    }
+  }
+}

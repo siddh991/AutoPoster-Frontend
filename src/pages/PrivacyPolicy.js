@@ -3,7 +3,7 @@ import React from 'react';
 const PrivacyPolicy = () => {
   return (
     <div style={{ margin: '1em' }}>
-      <h1 style={{ textAlign: 'center' }}>Privacy Policy for MediaPoster</h1>
+      <h1 style={{ textAlign: 'center' }}>Privacy Policy</h1>
       <p style={{ textAlign: 'center' }}><em>Last Updated: January 2, 2024</em></p>
       <div style={{ textAlign: 'left'}}>
         <p>Welcome to MediaPoster. This Privacy Policy explains how we collect, use, protect, and handle your personal information as you use our app and services. Our privacy policy is subject to change at our discretion at any time without any notice to customers.</p>

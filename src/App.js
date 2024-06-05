@@ -8,6 +8,10 @@ import { posts } from './graphql/queries'
 
 import '@aws-amplify/ui-react/styles.css';
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+
 
 Amplify.configure(awsconfig)
 
@@ -63,10 +67,6 @@ export default function App() {
   const [upcomingPosts, setPosts] = useState([])
   const [postsQueried, setPostsQueried] = useState(false)
 
-  // useEffect(() => {
-  //   fetchPosts(user.username);
-  // }, [])
-
   const fetchPosts = async (username) => {
     console.log("fetchPosts")
     console.log(username)
@@ -112,44 +112,53 @@ export default function App() {
         }
         
         return (
-          <div className="App">
-            <header className="App-header">
-              <div align="left">
-                <h1>AutoPoster For Instagram</h1>
-                <h3>Welcome {user.attributes.name}</h3>
-              </div>
-              <button onClick={signOut}>SIGN OUT</button>
-            </header>
-            <body style={{ marginLeft: '1%', marginRight: '1%' }}>
-              <h3 align="left">Upload Photos:</h3>
-              
-              <StorageManager
-                acceptedFileTypes={['.jpeg', '.jpg']}
-                accessLevel="public"
-                autoUpload={false}
-                maxFileCount={30}
-                processFile={(file) => processFile({ file, user })}
-              />
-
-              {/* Render the table with JSX */}
-              <h3 align="left">Upcoming Posts:</h3>
-
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Post At</th>
-                      <th>Image</th>
-                      <th>Caption</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {upcomingPosts.map(post => generateTableRow(post))}
-                  </tbody>
-                </table>
-              </div>
-            </body>        
-          </div>
+          <Router>
+            <div className="App">
+              <header className="App-header">
+                <div align="left">
+                  <h1>MediaSync</h1>
+                  <h3>Welcome {user.attributes.name}</h3>
+                </div>
+                <button onClick={signOut}>SIGN OUT</button>
+                <nav>
+                  <Link to='/'>Home</Link> | <Link to='/privacy-policy'>Privacy Policy</Link> | <Link to="/terms-of-service">Terms of Service</Link>
+                </nav>
+              </header>
+              <main style={{ marginLeft: '1%', marginRight: '1%' }}>
+                <Routes>
+                <Route path="/" element={
+                  <>
+                    <h3 align="left">Upload Photos:</h3>
+                    <StorageManager
+                      acceptedFileTypes={['.jpeg', '.jpg']}
+                      accessLevel="public"
+                      autoUpload={false}
+                      maxFileCount={30}
+                      processFile={(file) => processFile({ file, user })}
+                    />
+                    <h3 align="left">Upcoming Posts:</h3>
+                    <div>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Post At</th>
+                            <th>Image</th>
+                            <th>Caption</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {upcomingPosts.map(post => generateTableRow(post))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
+                } />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+              </Routes>
+              </main>        
+            </div>
+          </Router>
         );
       }}
     </Authenticator>

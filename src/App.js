@@ -116,7 +116,7 @@ export default function App() {
             <div className="App">
               <header className="App-header">
                 <div align="left">
-                  <h1>AutoPoster For Instagram</h1>
+                  <h1>MediaSync</h1>
                   <h3>Welcome {user.attributes.name}</h3>
                 </div>
                 <button onClick={signOut}>SIGN OUT</button>

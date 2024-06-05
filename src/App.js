@@ -124,45 +124,43 @@ export default function App() {
                   <Link to='/'>Home</Link> | <Link to='/privacy-policy'>Privacy Policy</Link> | <Link to="/terms-of-service">Terms of Service</Link>
                 </nav>
               </header>
-              <body style={{ marginLeft: '1%', marginRight: '1%' }}>
+              <main style={{ marginLeft: '1%', marginRight: '1%' }}>
                 <Routes>
-                  <Route exact path="/">
-                  <h3 align="left">Upload Photos:</h3>
-                  
-                  <StorageManager
-                    acceptedFileTypes={['.jpeg', '.jpg']}
-                    accessLevel="public"
-                    autoUpload={false}
-                    maxFileCount={30}
-                    processFile={(file) => processFile({ file, user })}
-                  />
-
-                  {/* Render the table with JSX */}
-                  <h3 align="left">Upcoming Posts:</h3>
-
-                  <div>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Post At</th>
-                          <th>Image</th>
-                          <th>Caption</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {upcomingPosts.map(post => generateTableRow(post))}
-                      </tbody>
-                    </table>
-                  </div>
-                  </Route>
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route path="/terms-of-service" element={<TermsOfService />} />
-                </Routes>
-              </body>        
+                <Route path="/" element={
+                  <>
+                    <h3 align="left">Upload Photos:</h3>
+                    <StorageManager
+                      acceptedFileTypes={['.jpeg', '.jpg']}
+                      accessLevel="public"
+                      autoUpload={false}
+                      maxFileCount={30}
+                      processFile={(file) => processFile({ file, user })}
+                    />
+                    <h3 align="left">Upcoming Posts:</h3>
+                    <div>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Post At</th>
+                            <th>Image</th>
+                            <th>Caption</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {upcomingPosts.map(post => generateTableRow(post))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
+                } />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+              </Routes>
+              </main>        
             </div>
           </Router>
         );
-      }};
+      }}
     </Authenticator>
   );
 }

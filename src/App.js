@@ -8,7 +8,7 @@ import { posts } from './graphql/queries'
 
 import '@aws-amplify/ui-react/styles.css';
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 
@@ -125,7 +125,7 @@ export default function App() {
                 </nav>
               </header>
               <body style={{ marginLeft: '1%', marginRight: '1%' }}>
-                <Switch>
+                <Routes>
                   <Route exact path="/">
                   <h3 align="left">Upload Photos:</h3>
                   
@@ -155,9 +155,9 @@ export default function App() {
                     </table>
                   </div>
                   </Route>
-                    <Route path="/privacy-policy" component={PrivacyPolicy} />
-                    <Route path="/terms-of-service" component={TermsOfService} />
-                </Switch>
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/terms-of-service" element={<TermsOfService />} />
+                </Routes>
               </body>        
             </div>
           </Router>

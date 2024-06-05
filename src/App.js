@@ -9,8 +9,8 @@ import { posts } from './graphql/queries'
 import '@aws-amplify/ui-react/styles.css';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import PrivacyPolicy from './PrivacyPolicy';
-import TermsOfService from './TermsOfService';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 
 Amplify.configure(awsconfig)

@@ -1,4 +1,3 @@
-// src/components/generateTableRow.js
 import React from 'react';
 import { TableRow, TableCell, IconButton, Collapse, Box, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,7 +7,7 @@ const generateTableRow = (post, open, handleExpandClick) => (
   <React.Fragment key={post.id}>
     <TableRow>
       <TableCell>
-        <img src={post.storageUrl} alt="Post" style={{ width: '100px', height: '100px' }} />
+        <img src={post.storageUrl} alt="Post" style={{ width: '150px', height: '150px' }} />
       </TableCell>
       <TableCell>{new Date(post.postAt).toLocaleString()}</TableCell>
       <TableCell>{post.caption}</TableCell>
@@ -16,7 +15,7 @@ const generateTableRow = (post, open, handleExpandClick) => (
         <IconButton onClick={() => handleExpandClick(post.id)}>
           <EditIcon />
         </IconButton>
-        <IconButton onClick={() => {/* handle delete */ }}>
+        <IconButton onClick={() => { /* handle delete */ }}>
           <DeleteIcon />
         </IconButton>
       </TableCell>
@@ -37,3 +36,4 @@ const generateTableRow = (post, open, handleExpandClick) => (
 );
 
 export default generateTableRow;
+

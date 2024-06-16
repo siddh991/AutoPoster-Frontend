@@ -10,7 +10,6 @@
 
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { styled } from '@mui/system';
 import generateTableRow from './generateTableRow'; // Importing the function
 
 
@@ -29,11 +28,6 @@ import generateTableRow from './generateTableRow'; // Importing the function
 //     <td>{post.caption}</td>
 //   </tr>
 // );
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  fontWeight: 'bold',
-  backgroundColor: theme.palette.primary.light,
-}));
-
 
 // const generateTableRow = (post) => (
 //   <TableRow key={post.storageUrl}>
@@ -83,10 +77,10 @@ const PostsTable = ({ posts }) => {
       <Table>
         <TableHead>
           <TableRow>
-            <StyledTableCell>Image</StyledTableCell>
-            <StyledTableCell>Post At</StyledTableCell>
-            <StyledTableCell>Caption</StyledTableCell>
-            <StyledTableCell>Actions</StyledTableCell>
+            <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Image</TableCell>
+            <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Post At</TableCell>
+            <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Caption</TableCell>
+            <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -98,6 +92,7 @@ const PostsTable = ({ posts }) => {
 };
 
 export default PostsTable;
+
 
 
 

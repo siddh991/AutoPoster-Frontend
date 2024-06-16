@@ -32,7 +32,7 @@ const generateTableRow = (post) => (
     <TableCell>{new Date(post.postAt).toLocaleString()}</TableCell>
     <TableCell>{post.caption}</TableCell>
     <TableCell>
-      <img src={post.imageUrl} alt="Post" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+      <img src={post.storageUrl} alt="Post" style={{ maxWidth: '100px', maxHeight: '100px' }} />
     </TableCell>
     <TableCell>
       <IconButton aria-label="edit">

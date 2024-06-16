@@ -1,15 +1,18 @@
 // src/components/PostsTable.js
-import React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import React, { useState } from 'react';
+// import {
+//   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton,
+//   Collapse, Box, Typography
+// } from '@mui/material';
+// import EditIcon from '@mui/icons-material/Edit';
+// import DeleteIcon from '@mui/icons-material/Delete';
+// import { styled } from '@mui/system';
+
+import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { styled } from '@mui/system';
+import generateTableRow from './generateTableRow'; // Importing the function
+
 
 // const generateTableRow = (post) => (
 //   <tr key={post.storageUrl}>
@@ -26,42 +29,75 @@ import DeleteIcon from '@mui/icons-material/Delete';
 //     <td>{post.caption}</td>
 //   </tr>
 // );
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  fontWeight: 'bold',
+  backgroundColor: theme.palette.primary.light,
+}));
 
-const generateTableRow = (post) => (
-  <TableRow key={post.storageUrl}>
-    <TableCell>{new Date(post.postAt).toLocaleString()}</TableCell>
-    <TableCell>{post.caption}</TableCell>
-    <TableCell>
-      <img src={post.storageUrl} alt="Post" style={{ maxWidth: '100px', maxHeight: '100px' }} />
-    </TableCell>
-    <TableCell>
-      <IconButton aria-label="edit">
-        <EditIcon />
-      </IconButton>
-      <IconButton aria-label="delete">
-        <DeleteIcon />
-      </IconButton>
-    </TableCell>
-  </TableRow>
-);
 
-const PostsTable = ({ posts }) => (
-  <TableContainer component={Paper}>
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>Post At</TableCell>
-          <TableCell>Caption</TableCell>
-          <TableCell>Image</TableCell>
-          <TableCell>Actions</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {posts.map(post => generateTableRow(post))}
-      </TableBody>
-    </Table>
-  </TableContainer>
-);
+// const generateTableRow = (post) => (
+//   <TableRow key={post.storageUrl}>
+//     <TableCell>{new Date(post.postAt).toLocaleString()}</TableCell>
+//     <TableCell>{post.caption}</TableCell>
+//     <TableCell>
+//       <img src={post.storageUrl} alt="Post" style={{ maxWidth: '100px', maxHeight: '100px' }} />
+//     </TableCell>
+//     <TableCell>
+//       <IconButton aria-label="edit">
+//         <EditIcon />
+//       </IconButton>
+//       <IconButton aria-label="delete">
+//         <DeleteIcon />
+//       </IconButton>
+//     </TableCell>
+//   </TableRow>
+// );
+
+// const PostsTable = ({ posts }) => (
+//   <TableContainer component={Paper}>
+//     <Table>
+//       <TableHead>
+//         <TableRow>
+//           <TableCell>Post At</TableCell>
+//           <TableCell>Caption</TableCell>
+//           <TableCell>Image</TableCell>
+//           <TableCell>Actions</TableCell>
+//         </TableRow>
+//       </TableHead>
+//       <TableBody>
+//         {posts.map(post => generateTableRow(post))}
+//       </TableBody>
+//     </Table>
+//   </TableContainer>
+// );
+
+const PostsTable = ({ posts }) => {
+  const [open, setOpen] = useState(null);
+
+  const handleExpandClick = (postId) => {
+    setOpen(open === postId ? null : postId);
+  };
+
+  return (
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>Image</StyledTableCell>
+            <StyledTableCell>Post At</StyledTableCell>
+            <StyledTableCell>Caption</StyledTableCell>
+            <StyledTableCell>Actions</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {posts.map((post) => generateTableRow(post, open, handleExpandClick))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};
+
+export default PostsTable;
 
 
 
@@ -82,5 +118,3 @@ const PostsTable = ({ posts }) => (
 //     </table>
 //   </div>
 // );
-
-export default PostsTable;

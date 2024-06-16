@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import awsconfig from './aws-exports';
 import { Amplify, API, graphqlOperation, Storage } from 'aws-amplify';
@@ -11,56 +10,14 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import signUpFormFields from './config/signUpForm'; 
+import OAuthCallback from './OAuthCallback';
+import Header from './components/Header';
+import UploadSection from './components/UploadSection';
+import PostsTable from './components/PostsTable';
+
 
 Amplify.configure(awsconfig)
-
-const formFields = {
-  signUp: {
-    email: {
-      order:1
-    },
-    password: {
-      order: 2
-    },
-    confirm_password: {
-      order: 3
-    },
-    name: {
-      label: "First Name",
-      order: 4
-    },
-    family_name: {
-      label: "Last Name",
-      order: 5
-    },
-    'custom:Company': {
-      label: "Company",
-      placeholder: "Enter your Company",
-      order: 6
-    },
-    phone_number: {
-      order: 7
-    },
-  },
-}
-
-function generateTableRow(post) {
-  return (
-    <tr key={post.storageUrl}>
-      <td>{new Date(post.postAt).toLocaleString()}</td>
-      <td>
-        <img src={post.storageUrl} 
-        style={{
-          maxWidth: '50%',   // Set a maximum width
-          maxHeight: '50%',  // Set a maximum height
-          width: 'auto',       // Allow width to adjust based on aspect ratio
-          height: 'auto'      // Allow height to adjust based on aspect ratio
-        }}/>
-      </td>
-      <td>{post.caption}</td>
-    </tr>
-  );
-}
 
 export default function App() {
   const [upcomingPosts, setPosts] = useState([])
@@ -71,12 +28,8 @@ export default function App() {
     console.log(username)
     try {
       const postData = await API.graphql(graphqlOperation(posts, { id: username }));
-      // console.log(postData.data.posts)
       const postList = postData.data.posts;
-      // console.log('posts:', postList);
       setPosts(postList);
-
-      // console.log(upcomingPosts)
 
       upcomingPosts.forEach(post => (
         console.log(post)
@@ -100,18 +53,11 @@ export default function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <div align="left">
-            <h1>MediaSync</h1>
-          </div>
-          <nav>
-            <Link to='/'>Home</Link> | <Link to='/privacy-policy'>Privacy Policy</Link> | <Link to="/terms-of-service">Terms of Service</Link>
-          </nav>
-        </header>
+        <Header />
         <main style={{ marginLeft: '1%', marginRight: '1%' }}>
           <Routes>
             <Route path="/" element={
-              <Authenticator formFields={formFields}>
+              <Authenticator formFields={signUpFormFields}>
                 {({ signOut, user }) => {
                   if (postsQueried == false) {
                     fetchPosts(user.username);
@@ -121,29 +67,8 @@ export default function App() {
                     <>
                       <h3>Welcome {user.attributes.name}</h3>
                       <button onClick={signOut}>SIGN OUT</button>
-                      <h3 align="left">Upload Photos:</h3>
-                      <StorageManager
-                        acceptedFileTypes={['.jpeg', '.jpg']}
-                        accessLevel="public"
-                        autoUpload={false}
-                        maxFileCount={30}
-                        processFile={(file) => processFile({ file, user })}
-                      />
-                      <h3 align="left">Upcoming Posts:</h3>
-                      <div>
-                        <table>
-                          <thead>
-                            <tr>
-                              <th>Post At</th>
-                              <th>Image</th>
-                              <th>Caption</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {upcomingPosts.map(post => generateTableRow(post))}
-                          </tbody>
-                        </table>
-                      </div>
+                      <UploadSection user={user} processFile={processFile} />
+                      <PostsTable posts={upcomingPosts} />
                     </>
                   );
                 }}

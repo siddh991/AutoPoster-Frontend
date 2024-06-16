@@ -12,9 +12,9 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import signUpFormFields from './config/signUpForm'; 
 // import OAuthCallback from './OAuthCallback';
-import Header from './components/Header';
-import UploadSection from './components/UploadSection';
-import PostsTable from './components/PostsTable';
+import Header from './components/header';
+import UploadSection from './components/uploadFile';
+import PostsTable from './components/generateTable';
 
 
 Amplify.configure(awsconfig)

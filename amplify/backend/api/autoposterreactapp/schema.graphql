@@ -7,7 +7,12 @@ type Query {
 }
 
 type Post {
+  id: ID!
   storageUrl: String!
   postAt: String!
   caption: String!
+}
+
+type Mutation {
+  deletePost(id: ID!): Post
 }

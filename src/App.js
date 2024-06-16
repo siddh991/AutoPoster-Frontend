@@ -27,7 +27,7 @@ export default function App() {
     console.log("fetchPosts")
     console.log(username)
     try {
-      const postData = await API.graphql(graphqlOperation(posts, { id: username }));
+      const postData = await API.graphql(graphqlOperation(posts, {company_id: username }));
       const postList = postData.data.posts;
       setPosts(postList);
 

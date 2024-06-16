@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import signUpFormFields from './config/signUpForm'; 
-import OAuthCallback from './OAuthCallback';
+// import OAuthCallback from './OAuthCallback';
 import Header from './components/Header';
 import UploadSection from './components/UploadSection';
 import PostsTable from './components/PostsTable';

@@ -3,7 +3,7 @@
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
 type Query {
-  posts: [Post] @function(name: "api-${env}")
+  posts(company_id: String!): [Post] @function(name: "api-${env}")
 }
 
 type Post {

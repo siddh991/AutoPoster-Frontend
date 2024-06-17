@@ -14,5 +14,5 @@ type Post {
 }
 
 type Mutation {
-  deletePost(id: ID!): Post
+  deletePost(id: ID!): Post @function(name: "deletePost-${env}")
 }

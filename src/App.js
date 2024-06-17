@@ -36,7 +36,7 @@ export default function App() {
         console.log(post)
        ))
     } catch (error) {
-      console.log('Error on fetching upcoming posts', error);
+      console.log('Error on fetching posts', error);
     }
   };
 
@@ -69,7 +69,7 @@ export default function App() {
                       <h3>Welcome {user.attributes.name}</h3>
                       <button onClick={signOut}>SIGN OUT</button>
                       <UploadSection user={user} processFile={processFile} />
-                      <PostsTable posts={upcomingPosts} />
+                      <PostsTable posts={upcomingPosts} setPosts={setPosts}/>
                     </>
                   );
                 }}

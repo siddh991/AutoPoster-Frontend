@@ -3,7 +3,7 @@ import { TableRow, TableCell, IconButton, Collapse, Box, Typography } from '@mui
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const generateTableRow = (post, open, handleExpandClick) => (
+const generateTableRow = (post, open, handleExpandClick, handleDeleteClick) => (
   <React.Fragment key={post.id}>
     <TableRow>
       <TableCell>
@@ -15,7 +15,7 @@ const generateTableRow = (post, open, handleExpandClick) => (
         <IconButton onClick={() => handleExpandClick(post.id)}>
           <EditIcon />
         </IconButton>
-        <IconButton onClick={() => { /* handle delete */ }}>
+        <IconButton onClick={() => handleDeleteClick(post.id)}>
           <DeleteIcon />
         </IconButton>
       </TableCell>

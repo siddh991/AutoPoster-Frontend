@@ -1,20 +1,18 @@
-import './App.css';
+import './assets/styles/App.css';
 import awsconfig from './aws-exports';
-import { Amplify, API, graphqlOperation, Storage } from 'aws-amplify';
-import {Authenticator, FileUploader } from '@aws-amplify/ui-react'
-import { StorageManager } from '@aws-amplify/ui-react-storage';
+import { Amplify, API, graphqlOperation } from 'aws-amplify';
+import {Authenticator } from '@aws-amplify/ui-react'
 import { posts } from './graphql/queries'
 
 import '@aws-amplify/ui-react/styles.css';
-import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
+import { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-import signUpFormFields from './config/signUpForm'; 
-// import OAuthCallback from './OAuthCallback';
-import Header from './components/header';
-import UploadSection from './components/uploadFile';
-import PostsTable from './components/generateTable';
+import signUpFormFields from './config/signUpForm.js'; 
+import Header from './components/header/header.js';
+import UploadSection from './components/uploadFile/uploadFile.js';
+import PostsTable from './components/generateTable/generateTable.js';
 
 
 Amplify.configure(awsconfig)
@@ -60,7 +58,7 @@ export default function App() {
             <Route path="/" element={
               <Authenticator formFields={signUpFormFields}>
                 {({ signOut, user }) => {
-                  if (postsQueried == false) {
+                  if (postsQueried === false) {
                     fetchPosts(user.username);
                     setPostsQueried(true);
                   }

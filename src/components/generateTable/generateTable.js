@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { API, graphqlOperation } from 'aws-amplify';
 import generateTableRow from './generateTableRow'; 
-import { deletePost as deletePostMutation } from '../graphql/mutations';
+import { deletePost as deletePostMutation } from '../../graphql/mutations';
 
 
 const PostsTable = ({ posts, setPosts}) => {

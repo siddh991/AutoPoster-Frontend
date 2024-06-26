@@ -8,11 +8,14 @@ type Query {
 
 type Post {
   id: ID!
-  storageUrl: String!
   postAt: String!
   caption: String!
+  bucket: String!
+  key: String!
 }
 
 type Mutation {
   deletePost(id: ID!): Post @function(name: "deletePost-${env}")
+  updatePost(id: ID!, caption: String!): Post @function(name: "updatePost-${env}")
+  generateAICaption(id: ID!, caption: String!, input: String!): Post @function(name: "generateAICaption-${env}")
 }

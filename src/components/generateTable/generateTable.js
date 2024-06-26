@@ -1,30 +1,71 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { API, graphqlOperation } from 'aws-amplify';
-import generateTableRow from './generateTableRow'; 
-import { deletePost as deletePostMutation } from '../../graphql/mutations';
+import GenerateTableRow from './generateTableRow'; 
+import { deletePost as deletePostMutation, updatePost as updatePostMutation, generateAICaption as generateAICaptionMutation } from '../../graphql/mutations';
 
-
-const PostsTable = ({ posts, setPosts}) => {
+const PostsTable = ({ posts, setPosts }) => {
   const [open, setOpen] = useState(null);
+  const [newCaption, setNewCaption] = useState('');
+  const [isAIGenerating, setIsAIGenerating] = useState(false);
 
-  const handleExpandClick = (postId) => {
-    setOpen(open === postId ? null : postId);
+  const handleExpandClick = (postId, currentCaption) => {
+    if (open === postId) {
+      setOpen(null);
+      setNewCaption('');
+    } else {
+      setOpen(postId);
+      setNewCaption(currentCaption);
+    }
   };
 
   const handleDeleteClick = async (postID) => {
-    try{
+    try {
       console.log('starting delete process');
       console.log(posts);
       const response = await API.graphql(graphqlOperation(deletePostMutation, {id: postID}));
       console.log('done deleting');
-      if (response.data.deletePost){
+      if (response.data.deletePost) {
         const updatedPosts = posts.filter(post => post.id !== postID);
         setPosts(updatedPosts);
         console.log('Deleted successfully:', response.data.deletePost);
       }
-    } catch (error){
+    } catch (error) {
       console.error('Error deleting post:', error);
+    }
+  };
+
+  const handleUpdateClick = async (postId, newCaption) => {
+    try {
+      const response = await API.graphql(graphqlOperation(updatePostMutation, { id: postId, caption: newCaption }));
+      console.log(response);
+      if (response.data.updatePost) {
+        const updatedPosts = posts.map(post =>
+          post.id === postId ? { ...post, caption: newCaption } : post
+        );
+        setPosts(updatedPosts);
+        setOpen(null); // Close the edit mode
+      }
+    } catch (error) {
+      console.error('Error updating post:', error);
+    }
+  };
+
+  const handleRegenerateClick = async (postId, feedback = '') => {
+    setIsAIGenerating(true);
+    try {
+      const post = posts.find(p => p.id === postId);
+      let prompt = `Generate a caption for an image of ${post.caption}`;
+      if (feedback) {
+        prompt += `. Consider this feedback: ${feedback}`;
+      }
+      const response = await API.graphql(graphqlOperation(generateAICaptionMutation, { id: postId, caption: post.caption, input: prompt }));
+      const aiCaption = response.data.generateAICaption.caption;
+      setNewCaption(aiCaption);
+    } catch (error) {
+      console.error('Error generating AI caption:', error);
+    } finally {
+      setIsAIGenerating(false);
     }
   };
 
@@ -40,7 +81,20 @@ const PostsTable = ({ posts, setPosts}) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {posts.map((post) => generateTableRow(post, open, handleExpandClick, handleDeleteClick))}
+        {posts.map((post) => (
+          <GenerateTableRow
+            key={post.id}
+            post={post}
+            open={open}
+            handleExpandClick={handleExpandClick}
+            handleDeleteClick={handleDeleteClick}
+            handleUpdateClick={handleUpdateClick}
+            handleRegenerateClick={handleRegenerateClick}
+            newCaption={newCaption}
+            setNewCaption={setNewCaption}
+            isAIGenerating={isAIGenerating}
+          />
+        ))}
         </TableBody>
       </Table>
     </TableContainer>

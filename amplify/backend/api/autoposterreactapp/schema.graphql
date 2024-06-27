@@ -14,8 +14,14 @@ type Post {
   key: String!
 }
 
+type CaptionResponse {
+  statusCode: Int!
+  caption: String!
+}
+
+
 type Mutation {
   deletePost(id: ID!): Post @function(name: "deletePost-${env}")
   updatePost(id: ID!, caption: String!): Post @function(name: "updatePost-${env}")
-  generateAICaption(id: ID!, caption: String!, input: String!): Post @function(name: "generateAICaption-${env}")
+  generateAICaption(id: ID!, previous_caption: String!, bucket: String!, key: String!, prompt: String!): CaptionResponse @function(name: "captionGenerator")
 }

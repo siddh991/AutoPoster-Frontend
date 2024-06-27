@@ -4,20 +4,24 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Storage } from 'aws-amplify';
 
-const GenerateTableRow = ({ post, open, handleExpandClick, handleDeleteClick, handleUpdateClick, handleRegenerateClick, newCaption, setNewCaption, isAIGenerating }) => {
+const GenerateTableRow = ({ post, open, handleExpandClick, handleDeleteClick, handleUpdateClick, handleRegenerateClick, isAIGenerating }) => {
   const [aiGenerateCount, setAiGenerateCount] = useState(0);
   const [feedback, setFeedback] = useState('');
   const [editMode, setEditMode] = useState('manual');
   const [imageUrl, setImageUrl] = useState('');
+  const [newCaption, setNewCaption] = useState(post.caption);
+  const [aiGeneratedCaptions, setAiGeneratedCaptions] = useState([]);
   const maxAiGenerations = 3; // Set the maximum number of AI regenerations
 
   useEffect(() => {
     if (open === post.id) {
-      setEditMode('manual'); 
+      setEditMode('manual');
+      setNewCaption(post.caption);
     } else {
-      setEditMode('manual'); 
+      setEditMode('manual');
+      setAiGeneratedCaptions([]);
     }
-  }, [open, post.id]);
+  }, [open, post.id, post.caption]);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -35,13 +39,18 @@ const GenerateTableRow = ({ post, open, handleExpandClick, handleDeleteClick, ha
   }, [post.key]);
 
 
-  const handleAiGenerate = () => {
+  const handleAiGenerate = async() => {
     if (aiGenerateCount < maxAiGenerations) {
-      handleRegenerateClick(post.id, feedback);
-      setAiGenerateCount(aiGenerateCount + 1);
-      setFeedback('');
+      const latestCaption = aiGeneratedCaptions.length > 0 ? aiGeneratedCaptions[aiGeneratedCaptions.length - 1] : post.caption;
+      const aiCaption = await handleRegenerateClick(post.id, latestCaption, feedback);
+      if (aiCaption) {
+        setAiGeneratedCaptions([...aiGeneratedCaptions, { caption: aiCaption, approved: false }]);
+        setAiGenerateCount(aiGenerateCount + 1);
+        setFeedback('');
+      }
     }
   };
+  
 
   
   const handleEditModeSelect = (mode) => {
@@ -53,8 +62,19 @@ const GenerateTableRow = ({ post, open, handleExpandClick, handleDeleteClick, ha
         handleExpandClick(post.id, post.caption);
       }
     }
-
   };
+
+  const handleApprove = (index) => {
+    handleUpdateClick(post.id, aiGeneratedCaptions[index].caption);
+    setAiGeneratedCaptions([]);
+    setAiGenerateCount(0);
+  };
+
+  const handleReject = (index) => {
+    const newCaptions = aiGeneratedCaptions.filter((_, i) => i !== index);
+    setAiGeneratedCaptions(newCaptions);
+  };
+
 
   const getButtonStyle = (mode) => ({
     width: '50%',
@@ -150,6 +170,44 @@ const GenerateTableRow = ({ post, open, handleExpandClick, handleDeleteClick, ha
                       Maximum AI regenerations reached.
                     </Typography>
                   )}
+                  {aiGeneratedCaptions.map((aiCaption, index) => (
+                    <Box key={index} mt={2}>
+                      <Typography variant="body1">AI Generated Caption {index + 1}:</Typography>
+                      <TextField
+                        fullWidth
+                        multiline
+                        rows={2}
+                        value={aiCaption.caption}
+                        disabled
+                           />
+                    <Box display="flex" justifyContent="space-between" mt={1}>
+                        <Button
+                          onClick={() => handleApprove(index)}
+                          variant="contained"
+                          color="primary"
+                          style={{ width: '30%' }}
+                        >
+                          Approve
+                        </Button>
+                        <Button
+                          onClick={() => handleReject(index)}
+                          variant="contained"
+                          color="secondary"
+                          style={{ width: '30%' }}
+                        >Reject
+                        </Button>
+                        <Button
+                          onClick={handleAiGenerate}
+                          disabled={isAIGenerating || aiGenerateCount >= maxAiGenerations}
+                          variant="contained"
+                          color="primary"
+                          style={{ width: '30%' }}
+                        >
+                          Regenerate
+                        </Button>
+                      </Box>
+                    </Box>
+                  ))}
                 </Box>
               )}
             </Box>

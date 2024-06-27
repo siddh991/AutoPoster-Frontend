@@ -6,16 +6,13 @@ import { deletePost as deletePostMutation, updatePost as updatePostMutation, gen
 
 const PostsTable = ({ posts, setPosts }) => {
   const [open, setOpen] = useState(null);
-  const [newCaption, setNewCaption] = useState('');
   const [isAIGenerating, setIsAIGenerating] = useState(false);
 
   const handleExpandClick = (postId, currentCaption) => {
     if (open === postId) {
       setOpen(null);
-      setNewCaption('');
     } else {
       setOpen(postId);
-      setNewCaption(currentCaption);
     }
   };
 
@@ -51,19 +48,19 @@ const PostsTable = ({ posts, setPosts }) => {
     }
   };
 
-  const handleRegenerateClick = async (postId, feedback = '') => {
+  const handleRegenerateClick = async (postId, previousCaption, feedback = '') => {
     setIsAIGenerating(true);
     try {
       const post = posts.find(p => p.id === postId);
-      let prompt = `Generate a caption for an image of ${post.caption}`;
-      if (feedback) {
-        prompt += `. Consider this feedback: ${feedback}`;
-      }
-      const response = await API.graphql(graphqlOperation(generateAICaptionMutation, { id: postId, caption: post.caption, input: prompt }));
+      console.log('previous caption is %s, previous bucket is %s', previousCaption, post.bucket)
+      const response = await API.graphql(graphqlOperation(generateAICaptionMutation, { id: postId, previous_caption: previousCaption, bucket: post.bucket, key: post.key, prompt: feedback}));
+      console.log(response.data)
       const aiCaption = response.data.generateAICaption.caption;
-      setNewCaption(aiCaption);
+      console.log(aiCaption)
+      return aiCaption;
     } catch (error) {
       console.error('Error generating AI caption:', error);
+      return null;
     } finally {
       setIsAIGenerating(false);
     }
@@ -90,8 +87,6 @@ const PostsTable = ({ posts, setPosts }) => {
             handleDeleteClick={handleDeleteClick}
             handleUpdateClick={handleUpdateClick}
             handleRegenerateClick={handleRegenerateClick}
-            newCaption={newCaption}
-            setNewCaption={setNewCaption}
             isAIGenerating={isAIGenerating}
           />
         ))}

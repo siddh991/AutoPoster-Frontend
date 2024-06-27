@@ -26,13 +26,22 @@ export const updatePost = /* GraphQL */ `
   }
 `;
 export const generateAICaption = /* GraphQL */ `
-  mutation GenerateAICaption($id: ID!, $caption: String!, $input: String!) {
-    generateAICaption(id: $id, caption: $caption, input: $input) {
-      id
-      postAt
+  mutation GenerateAICaption(
+    $id: ID!
+    $previous_caption: String!
+    $bucket: String!
+    $key: String!
+    $prompt: String!
+  ) {
+    generateAICaption(
+      id: $id
+      previous_caption: $previous_caption
+      bucket: $bucket
+      key: $key
+      prompt: $prompt
+    ) {
+      statusCode
       caption
-      bucket
-      key
       __typename
     }
   }

@@ -1,11 +1,12 @@
 import json
 import psycopg2
+from psycopg2.extras import DictCursor
 import os
 
 def handler(event, context):
   print('received event:')
   print(event)
-  print(event['arguments']['id'])
+  print(event['arguments']['company_id'])
 
   try:
     conn = psycopg2.connect(database = os.environ['database'], 
@@ -14,11 +15,11 @@ def handler(event, context):
                             password = os.environ['password'],
                             port = int(os.environ['port']))
     
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory=DictCursor)
 
-    sql = """SELECT * FROM posts WHERE company_id=%s AND post_at >= NOW();"""
+    sql = """SELECT id, post_at, post_caption, bucket, key  FROM posts WHERE company_id=%s AND post_at >= NOW();"""
 
-    cur.execute(sql, (event['arguments']['id'],))
+    cur.execute(sql, (event['arguments']['company_id'],))
 
     results = cur.fetchall()
 
@@ -26,9 +27,11 @@ def handler(event, context):
 
     for item in results:
         data_dict = {
-            "storageUrl": item[7],
-            "postAt": item[4].strftime("%Y-%m-%d %H:%M:%S %Z"),
-            "caption": item[3],
+            "id": item['id'],
+            "postAt": item['post_at'].strftime("%Y-%m-%d %H:%M:%S %Z"),
+            "caption": item['post_caption'],
+            "bucket": item['bucket'],
+            "key": item['key']
         }
 
         ret.append(data_dict)

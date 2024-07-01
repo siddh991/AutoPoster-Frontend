@@ -19,6 +19,10 @@
         "api": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
           "s3Key": "amplify-builds/api-36417534504c53324a39-build.zip"
+        },
+        "tiktok": {
+          "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
+          "s3Key": "amplify-builds/tiktok-34757648646649726833-build.zip"
         }
       },
       "api": {

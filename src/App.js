@@ -13,6 +13,8 @@ import signUpFormFields from './config/signUpForm.js';
 import Header from './components/header/header.js';
 import UploadSection from './components/uploadFile/uploadFile.js';
 import PostsTable from './components/generateTable/generateTable.js';
+import Home from "./components/tiktokOauth/Home";
+import Redirect from "./components/tiktokOauth/Redirect";
 
 
 Amplify.configure(awsconfig)
@@ -73,6 +75,8 @@ export default function App() {
                 }}
               </Authenticator>
             } />
+            <Route path="/tiktok-setup" element={<Home />} />
+            <Route path="/tiktok-redirect" element={<Redirect />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
           </Routes>

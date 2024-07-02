@@ -5,7 +5,7 @@ const UploadSection = ({ user, processFile }) => (
   <div>
     <h3 align="left">Upload Photos:</h3>
     <StorageManager
-      acceptedFileTypes={['.jpeg', '.jpg']}
+      acceptedFileTypes={['.jpeg', '.jpg', '.png']}
       accessLevel="public"
       autoUpload={false}
       maxFileCount={30}

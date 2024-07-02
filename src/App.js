@@ -1,89 +1,35 @@
 import './assets/styles/App.css';
 import awsconfig from './aws-exports';
-import { Amplify, API, graphqlOperation } from 'aws-amplify';
-import {Authenticator } from '@aws-amplify/ui-react'
-import { posts } from './graphql/queries'
-
-import '@aws-amplify/ui-react/styles.css';
-import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { Amplify } from 'aws-amplify';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-import signUpFormFields from './config/signUpForm.js'; 
 import Header from './components/header/header.js';
-import UploadSection from './components/uploadFile/uploadFile.js';
-import PostsTable from './components/generateTable/generateTable.js';
+import Homepage from './components/homepage/Homepage.js';
+import AuthPage from './components/auth/AuthPage.js';
+import Dashboard from './components/dashboard/Dashboard.js';
 import Home from "./components/tiktokOauth/Home";
 import Redirect from "./components/tiktokOauth/Redirect";
 
-
-Amplify.configure(awsconfig)
+Amplify.configure(awsconfig);
 
 export default function App() {
-  const [upcomingPosts, setPosts] = useState([])
-  const [postsQueried, setPostsQueried] = useState(false)
-
-  const fetchPosts = async (username) => {
-    console.log("fetchPosts")
-    console.log(username)
-    try {
-      console.log('starting postsData')
-      const postData = await API.graphql(graphqlOperation(posts, {company_id: username }));
-      const postList = postData.data.posts;
-      setPosts(postList);
-
-      upcomingPosts.forEach(post => (
-        console.log(post)
-       ))
-    } catch (error) {
-      console.log('Error on fetching posts', error);
-    }
-  };
-
-  const processFile = async ({ file, user }) => {
-    file = file.file
-    console.log(file)
-    console.log(user);
-    const username = user.username;
-  
-    const uniqueFileName = `${username}/${file.name}`;
-  
-    return { file, key: uniqueFileName };
-  };
-
   return (
     <Router>
       <div className="App">
         <Header />
         <main style={{ marginLeft: '1%', marginRight: '1%' }}>
           <Routes>
-            <Route path="/" element={
-              <Authenticator formFields={signUpFormFields}>
-                {({ signOut, user }) => {
-                  if (postsQueried === false) {
-                    fetchPosts(user.username);
-                    setPostsQueried(true);
-                  }
-                  return (
-                    <>
-                      <h3>Welcome {user.attributes.name}</h3>
-                      <button onClick={signOut}>SIGN OUT</button>
-                      <UploadSection user={user} processFile={processFile} />
-                      <PostsTable posts={upcomingPosts} setPosts={setPosts}/>
-                    </>
-                  );
-                }}
-              </Authenticator>
-            } />
-            <Route path="/tiktok-setup" element={<Home />} />
-            <Route path="/tiktok-redirect" element={<Redirect />} />
+            <Route path="/" element={<Homepage />} />  {/* Public Home Page */}
+            <Route path="/login" element={<AuthPage />} />  {/* Login/Sign Up Page */}
+            <Route path="/dashboard" element={<Dashboard />} />  {/* Protected Dashboard */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/tiktok-setup" element={<Home />} />
+            <Route path="/tiktok-redirect" element={<Redirect />} />
           </Routes>
-        </main>        
+        </main>
       </div>
     </Router>
   );
 }
-
-// export default withAuthenticator(App);

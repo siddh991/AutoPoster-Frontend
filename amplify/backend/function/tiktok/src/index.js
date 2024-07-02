@@ -1,15 +1,18 @@
 const awsServerlessExpress = require('aws-serverless-express');
 const app = require('./app');
 
-/**
- * @type {import('http').Server}
- */
 const server = awsServerlessExpress.createServer(app);
 
-/**
- * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
- */
 exports.handler = (event, context) => {
-  console.log(`EVENT: ${JSON.stringify(event)}`);
-  return awsServerlessExpress.proxy(server, event, context, 'PROMISE').promise;
+  // Log the incoming event for debugging
+  console.log('Received event:', JSON.stringify(event, null, 2));
+
+  // Modify the event to match what express expects
+  const modifiedEvent = {
+    ...event,
+    httpMethod: event.requestContext.http.method,
+    path: event.rawPath,
+  };
+
+  return awsServerlessExpress.proxy(server, modifiedEvent, context, 'PROMISE').promise;
 };

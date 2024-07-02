@@ -12,6 +12,8 @@ const Header = () => (
       <Link to='/'>Home</Link>
       <Link to='/privacy-policy'>Privacy Policy</Link>
       <Link to='/terms-of-service'>Terms of Service</Link>
+      <Link to='/dashboard'>Dashboard</Link> {/* Added Dashboard link */}
+      <Link to='/login'>Login</Link> {/* Added Login link */}
     </nav>
   </header>
 );

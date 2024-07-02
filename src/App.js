@@ -10,6 +10,7 @@ import AuthPage from './components/auth/AuthPage.js';
 import Dashboard from './components/dashboard/Dashboard.js';
 import Home from "./components/tiktokOauth/Home";
 import Redirect from "./components/tiktokOauth/Redirect";
+import PrivateRoute from './components/auth/PrivateAuth.js';
 
 Amplify.configure(awsconfig);
 
@@ -22,11 +23,11 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Homepage />} />  {/* Public Home Page */}
             <Route path="/login" element={<AuthPage />} />  {/* Login/Sign Up Page */}
-            <Route path="/dashboard" element={<Dashboard />} />  {/* Protected Dashboard */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/tiktok-setup" element={<Home />} />
             <Route path="/tiktok-redirect" element={<Redirect />} />
+            <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />  {/* Protected Dashboard */}
           </Routes>
         </main>
       </div>

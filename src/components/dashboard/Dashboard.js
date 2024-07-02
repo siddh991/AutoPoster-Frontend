@@ -20,13 +20,13 @@ const Dashboard = ({ user, signOut }) => {
   };
 
   const processFile = async ({ file, user }) => {
-    file = file.file
-    console.log(file)
+    file = file.file;
+    console.log(file);
     console.log(user);
     const username = user.username;
-  
+
     const uniqueFileName = `${username}/${file.name}`;
-  
+
     return { file, key: uniqueFileName };
   };
 

@@ -1,0 +1,34 @@
+/* Home.css */
+
+.home-container {
+  text-align: center;
+}
+
+.hero-section {
+  background-color: #4bb3c0;
+  padding: 50px 20px;
+  color: white;
+}
+
+.hero-section h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.hero-section p {
+  font-size: 1.5em;
+  margin-bottom: 40px;
+}
+
+.login-button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background-color: #ff6347;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #ff7b60;
+}

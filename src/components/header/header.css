@@ -1,0 +1,59 @@
+@font-face {
+    font-family: Poppins;
+    src: url('../fonts/RadiateSans-Regular.70e2fe.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  body {
+    font-family: Poppins, sans-serif;
+  }
+  
+  .App-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color:#ffff; /*#ffff;*/ /*#4bb3c0;*/
+    color: white; 
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 150px; /* height of logo */
+    margin-right: 10px; 
+  }
+  
+  .company-name {
+    font-size: 24px; 
+    color: black; 
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: black; /* Set the link color to white */
+    font-weight: 600;
+  }
+  
+  .nav-links a:hover {
+    color: #FF6347; /* Optional: Change the hover color if desired */
+  }
+  
+  .App-header .nav-links a {
+    text-decoration: none;
+    color: black !important; /* Ensure the link color is white */
+    font-weight: 600;
+  }
+  
+  .App-header .nav-links a:hover {
+    color: #FF6347; /* Optional: Change the hover color if desired */
+  }
+  

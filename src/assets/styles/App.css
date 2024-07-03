@@ -35,3 +35,16 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: 'CustomFont';
+  src: url('/src/components/fonts/RadiateSans-Regular.70e2fe.woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'CustomFont', sans-serif;
+}
+
+

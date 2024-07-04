@@ -17,12 +17,25 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "PostHandler": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "api": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
+    },
+    "autoposterreactappPythonUtils": {
+      "Arn": "string"
+    },
+    "autoposterreactapploggingUtils": {
+      "Arn": "string"
     },
     "tiktok": {
       "Arn": "string",

@@ -54,11 +54,42 @@
     }
   },
   "function": {
+    "PostHandler": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "autoposterreactapploggingUtils"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "autoposterreactappPythonUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "api": {
       "build": true,
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "autoposterreactappPythonUtils": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
+    "autoposterreactapploggingUtils": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
     },
     "tiktok": {
       "build": true,
@@ -67,6 +98,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_PostHandler_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "PostHandler"
+        }
+      ]
+    },
+    "AMPLIFY_function_PostHandler_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "PostHandler"
+        }
+      ]
+    },
     "AMPLIFY_function_api_deploymentBucketName": {
       "usedBy": [
         {
@@ -80,6 +127,38 @@
         {
           "category": "function",
           "resourceName": "api"
+        }
+      ]
+    },
+    "AMPLIFY_function_autoposterreactappPythonUtils_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "autoposterreactappPythonUtils"
+        }
+      ]
+    },
+    "AMPLIFY_function_autoposterreactappPythonUtils_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "autoposterreactappPythonUtils"
+        }
+      ]
+    },
+    "AMPLIFY_function_autoposterreactapploggingUtils_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "autoposterreactapploggingUtils"
+        }
+      ]
+    },
+    "AMPLIFY_function_autoposterreactapploggingUtils_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "autoposterreactapploggingUtils"
         }
       ]
     },

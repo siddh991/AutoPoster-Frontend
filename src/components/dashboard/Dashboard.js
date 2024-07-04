@@ -4,18 +4,30 @@ import PostsTable from '../generateTable/generateTable.js';
 import { API, graphqlOperation } from 'aws-amplify';
 import { posts } from '../../graphql/queries';
 import './Dashboard.css';
+import { fetchPosts } from '../apis/api.js'; // Import the API functions
 
 const Dashboard = ({ user, signOut }) => {
   const [upcomingPosts, setPosts] = useState([]);
   const [postsQueried, setPostsQueried] = useState(false);
 
-  const fetchPosts = async (username) => {
+  // const fetchPosts = async (username) => {
+  //   try {
+  //     const postData = await API.graphql(graphqlOperation(posts, { company_id: username }));
+  //     const postList = postData.data.posts;
+  //     setPosts(postList);
+  //   } catch (error) {
+  //     console.log('Error on fetching posts', error);
+  //   }
+  // };
+  const loadPosts = async (username) => {
+    console.log(username);
     try {
-      const postData = await API.graphql(graphqlOperation(posts, { company_id: username }));
-      const postList = postData.data.posts;
+      const postList = await fetchPosts(username);
+      console.log('get list');
       setPosts(postList);
     } catch (error) {
-      console.log('Error on fetching posts', error);
+      console.log(error);
+      console.log('Error fetching posts', error);
     }
   };
 
@@ -32,7 +44,8 @@ const Dashboard = ({ user, signOut }) => {
 
   useEffect(() => {
     if (!postsQueried) {
-      fetchPosts(user.username);
+      // fetchPosts(user.username);
+      loadPosts(user.username);
       setPostsQueried(true);
     }
   }, [postsQueried, user.username]);

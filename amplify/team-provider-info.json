@@ -18,11 +18,11 @@
       "function": {
         "autoposterreactapploggingUtils": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/autoposterreactapploggingUtils-LambdaLayerVersion3ba1e728-build.zip"
+          "s3Key": "amplify-builds/autoposterreactapploggingUtils-LambdaLayerVersion8f491b06-build.zip"
         },
         "tiktok": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/tiktok-7171554e77746931514a-build.zip"
+          "s3Key": "amplify-builds/tiktok-6f766f5538646f46514e-build.zip"
         },
         "autoposterreactappPythonUtils": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",

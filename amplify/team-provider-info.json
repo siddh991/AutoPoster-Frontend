@@ -16,10 +16,6 @@
         "autoposterreactappb4bb870d": {}
       },
       "function": {
-        "api": {
-          "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/api-3164455661492f2f4c64-build.zip"
-        },
         "autoposterreactapploggingUtils": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
           "s3Key": "amplify-builds/autoposterreactapploggingUtils-LambdaLayerVersion3ba1e728-build.zip"

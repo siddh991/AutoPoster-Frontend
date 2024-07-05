@@ -25,8 +25,8 @@ export default function App() {
             <Route path="/login" element={<AuthPage />} />  {/* Login/Sign Up Page */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/tiktok-setup" element={<Home />} />
-            <Route path="/tiktok-redirect" element={<Redirect />} />
+            <Route path="/tiktok-setup" element={<PrivateRoute element={Home} />} />
+            <Route path="/tiktok-redirect" element={<PrivateRoute element={Redirect} />} />
             <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />  {/* Protected Dashboard */}
           </Routes>
         </main>

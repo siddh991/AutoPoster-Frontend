@@ -12,7 +12,7 @@ import Home from "./components/tiktokOauth/Home";
 import Redirect from "./components/tiktokOauth/Redirect";
 import PrivateRoute from './components/auth/PrivateAuth.js';
 
-Amplify.configure(awsconfig);
+Amplify.configure({...awsconfig, ssr: true});
 
 export default function App() {
   return (

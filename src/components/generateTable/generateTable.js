@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { API, graphqlOperation } from 'aws-amplify';
 import GenerateTableRow from './generateTableRow'; 
 import { deletePost as deletePostMutation, updatePost as updatePostMutation, generateAICaption as generateAICaptionMutation } from '../../graphql/mutations';
+import { deletePost, updatePost } from '../apis/api.js'; 
 
 const PostsTable = ({ posts, setPosts }) => {
   const [open, setOpen] = useState(null);
@@ -16,17 +17,19 @@ const PostsTable = ({ posts, setPosts }) => {
     }
   };
 
-  const handleDeleteClick = async (postID) => {
+  const handleDeleteClick = async (postId) => {
     try {
       console.log('starting delete process');
-      console.log(posts);
-      const response = await API.graphql(graphqlOperation(deletePostMutation, {id: postID}));
-      console.log('done deleting');
-      if (response.data.deletePost) {
-        const updatedPosts = posts.filter(post => post.id !== postID);
-        setPosts(updatedPosts);
-        console.log('Deleted successfully:', response.data.deletePost);
-      }
+      // const response = await API.graphql(graphqlOperation(deletePostMutation, {id: postID}));
+      // if (response.data.deletePost) {
+      //   const updatedPosts = posts.filter(post => post.id !== postID);
+      //   setPosts(updatedPosts);
+      //   console.log('Deleted successfully:', response.data.deletePost);
+      // }
+      await deletePost(postId);
+      const updatedPosts = posts.filter(post => post.id !== postId);
+      setPosts(updatedPosts);
+      console.log('Deleted successfully');
     } catch (error) {
       console.error('Error deleting post:', error);
     }
@@ -34,15 +37,22 @@ const PostsTable = ({ posts, setPosts }) => {
 
   const handleUpdateClick = async (postId, newCaption) => {
     try {
-      const response = await API.graphql(graphqlOperation(updatePostMutation, { id: postId, caption: newCaption }));
-      console.log(response);
-      if (response.data.updatePost) {
-        const updatedPosts = posts.map(post =>
-          post.id === postId ? { ...post, caption: newCaption } : post
-        );
-        setPosts(updatedPosts);
-        setOpen(null); // Close the edit mode
-      }
+      // const response = await API.graphql(graphqlOperation(updatePostMutation, { id: postId, caption: newCaption }));
+      // console.log(response);
+      // if (response.data.updatePost) {
+      //   const updatedPosts = posts.map(post =>
+      //     post.id === postId ? { ...post, caption: newCaption } : post
+      //   );
+      //   setPosts(updatedPosts);
+      //   setOpen(null); // Close the edit mode
+      console.log('Starting update process');
+      await updatePost(postId, newCaption);
+      const updatedPosts = posts.map(post =>
+        post.id === postId ? { ...post, caption: newCaption } : post
+      );
+      setPosts(updatedPosts);
+      setOpen(null); // Close the edit mode
+      console.log('Updated successfully');
     } catch (error) {
       console.error('Error updating post:', error);
     }

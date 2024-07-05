@@ -12,7 +12,7 @@ import Home from "./components/tiktokOauth/Home";
 import Redirect from "./components/tiktokOauth/Redirect";
 import PrivateRoute from './components/auth/PrivateAuth.js';
 
-Amplify.configure(awsconfig);
+Amplify.configure({...awsconfig, ssr: true});
 
 export default function App() {
   return (
@@ -25,8 +25,8 @@ export default function App() {
             <Route path="/login" element={<AuthPage />} />  {/* Login/Sign Up Page */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/tiktok-setup" element={<Home />} />
-            <Route path="/tiktok-redirect" element={<Redirect />} />
+            <Route path="/tiktok-setup" element={<PrivateRoute element={Home} />} />
+            <Route path="/tiktok-redirect" element={<PrivateRoute element={Redirect} />} />
             <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />  {/* Protected Dashboard */}
           </Routes>
         </main>

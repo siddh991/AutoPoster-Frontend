@@ -16,20 +16,28 @@
         "autoposterreactappb4bb870d": {}
       },
       "function": {
-        "api": {
+        "autoposterreactapploggingUtils": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/api-36417534504c53324a39-build.zip"
+          "s3Key": "amplify-builds/autoposterreactapploggingUtils-LambdaLayerVersion8f491b06-build.zip"
         },
         "tiktok": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/tiktok-34757648646649726833-build.zip"
+          "s3Key": "amplify-builds/tiktok-6f766f5538646f46514e-build.zip"
+        },
+        "autoposterreactappPythonUtils": {
+          "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
+          "s3Key": "amplify-builds/autoposterreactappPythonUtils-LambdaLayerVersionf88cd9bf-build.zip"
+        },
+        "PostHandler": {
+          "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
+          "s3Key": "amplify-builds/PostHandler-4c58457336754141474d-build.zip"
         }
-      },
-      "api": {
-        "autoposterreactapp": {}
       },
       "storage": {
         "mediaStorage2": {}
+      },
+      "api": {
+        "autoposterreactapp": {}
       }
     }
   }

@@ -36,3 +36,21 @@ def get_secret():
     print('done secret function')
     return secret
 
+def conn_database():
+    conn = None
+    cur = None
+    logger.info('starting conn database')
+    try: 
+        secret = get_secret()
+        username = secret['username']
+        password = secret['password']
+        host = secret['host']
+        dbname = secret['dbname']
+        conn_string = f"dbname={dbname} user={username} password={password} host={host}"
+        conn = psycopg2.connect(conn_string)
+        cur = conn.cursor(cursor_factory=DictCursor)
+        return conn, cur
+
+    except Exception as e: 
+        logger.error(f"Error connecting to database: {e}")
+        return None, None

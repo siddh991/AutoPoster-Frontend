@@ -54,6 +54,27 @@
     }
   },
   "function": {
+    "AutoPoster": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "autoposterreactapploggingUtils"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "autoposterreactappPythonUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "PostHandler": {
       "build": true,
       "dependsOn": [
@@ -92,6 +113,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_AutoPoster_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AutoPoster"
+        }
+      ]
+    },
+    "AMPLIFY_function_AutoPoster_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AutoPoster"
+        }
+      ]
+    },
     "AMPLIFY_function_PostHandler_deploymentBucketName": {
       "usedBy": [
         {

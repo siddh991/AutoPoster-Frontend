@@ -26,11 +26,15 @@
         },
         "autoposterreactappPythonUtils": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/autoposterreactappPythonUtils-LambdaLayerVersionf88cd9bf-build.zip"
+          "s3Key": "amplify-builds/autoposterreactappPythonUtils-LambdaLayerVersion8b0368b6-build.zip"
         },
         "PostHandler": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/PostHandler-4c58457336754141474d-build.zip"
+          "s3Key": "amplify-builds/PostHandler-38586c4863476f4f6a33-build.zip"
+        },
+        "AutoPoster": {
+          "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
+          "s3Key": "amplify-builds/AutoPoster-2b5545534a585070746c-build.zip"
         }
       },
       "storage": {

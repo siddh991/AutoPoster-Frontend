@@ -17,6 +17,13 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+    "AutoPoster": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "PostHandler": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

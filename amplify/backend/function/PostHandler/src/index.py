@@ -6,40 +6,23 @@ sys.path.append('/opt')
 sys.path.append('/lib/python')
 import psycopg2
 from psycopg2.extras import DictCursor
-from get_secret import get_secret
+from get_secret import conn_database
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
-def conn_database():
-    conn = None
-    cur = None
-    logger.info('starting conn database')
-    try: 
-        secret = get_secret()
-        username = secret['username']
-        password = secret['password']
-        host = secret['host']
-        dbname = secret['dbname']
-        conn_string = f"dbname={dbname} user={username} password={password} host={host}"
-        conn = psycopg2.connect(conn_string)
-        cur = conn.cursor(cursor_factory=DictCursor)
-        return conn, cur
-
-    except Exception as e: 
-        logger.error(f"Error connecting to database: {e}")
-        return None, None
-
-
 def get_table(company_id):
     logger.info('starting get table')
-    conn, cur = conn_database()
-    logger.info('connected to database')
-    if not conn or not cur:
-        return {
-            'statusCode': 500,
-            'body': json.dumps({'error': 'Failed to connect to the database'})
-        }
+    try:
+        conn, cur = conn_database()
+        logger.info('connected to database')
+    except Exception as e: 
+        logger.error('cannot connect to database')
+        if not conn or not cur:
+            return {
+                'statusCode': 500,
+                'body': json.dumps({'error': 'Failed to connect to the database'})
+            }
     logger.info('got database connection')
     sql = """SELECT id, post_at, post_caption, bucket, key FROM posts WHERE company_id=%s AND post_at >= NOW();"""
     try:

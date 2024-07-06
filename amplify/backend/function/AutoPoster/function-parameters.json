@@ -1,5 +1,11 @@
 {
-  "permissions": {},
+  "permissions": {
+    "storage": {
+      "mediaStorage2": [
+        "update"
+      ]
+    }
+  },
   "lambdaLayers": [
     {
       "type": "ProjectLayer",

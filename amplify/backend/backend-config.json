@@ -59,10 +59,10 @@
       "dependsOn": [
         {
           "attributes": [
-            "Arn"
+            "BucketName"
           ],
-          "category": "function",
-          "resourceName": "autoposterreactapploggingUtils"
+          "category": "storage",
+          "resourceName": "mediaStorage2"
         },
         {
           "attributes": [
@@ -70,6 +70,13 @@
           ],
           "category": "function",
           "resourceName": "autoposterreactappPythonUtils"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "autoposterreactapploggingUtils"
         }
       ],
       "providerPlugin": "awscloudformation",

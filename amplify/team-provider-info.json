@@ -18,7 +18,7 @@
       "function": {
         "autoposterreactapploggingUtils": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/autoposterreactapploggingUtils-LambdaLayerVersion8f491b06-build.zip"
+          "s3Key": "amplify-builds/autoposterreactapploggingUtils-LambdaLayerVersionf8f35b2e-build.zip"
         },
         "tiktok": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
@@ -26,7 +26,7 @@
         },
         "autoposterreactappPythonUtils": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/autoposterreactappPythonUtils-LambdaLayerVersion8b0368b6-build.zip"
+          "s3Key": "amplify-builds/autoposterreactappPythonUtils-LambdaLayerVersionaccb3182-build.zip"
         },
         "PostHandler": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
@@ -34,7 +34,7 @@
         },
         "AutoPoster": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/AutoPoster-2b5545534a585070746c-build.zip"
+          "s3Key": "amplify-builds/AutoPoster-71384a5a35395131325a-build.zip"
         }
       },
       "storage": {

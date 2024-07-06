@@ -1,6 +1,8 @@
 import json
 import boto3 
 import logging
+import psycopg2
+from psycopg2.extras import DictCursor
 from botocore.exceptions import ClientError
 
 logger = logging.getLogger()

@@ -1,14 +1,17 @@
 import os
+import sys
 import json
 import boto3
 import random
+sys.path.append('/opt')
+sys.path.append('/lib/python')
 import psycopg2
 import urllib.parse
 from get_secret import conn_database
 from psycopg2.extras import DictCursor
 from aws_lambda_powertools import Logger
 from aws_lambda_powertools.utilities.typing import LambdaContext
-from generate_post_schedule import generate_next_post_timestamp
+from generatePostSchedule import generate_next_post_timestamp
 
 logger = Logger()
 lambda_client = boto3.client('lambda')
@@ -53,7 +56,7 @@ def get_prompt(conn, cur, company_id, platform):
     logger.info("ChatGPT prompt: %s", prompt)
     return prompt
 
-def lambda_handler(event, context: LambdaContext):
+def handler(event, context: LambdaContext):
     try:
         bucket = event['Records'][0]['s3']['bucket']['name']
         key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'], encoding='utf-8')

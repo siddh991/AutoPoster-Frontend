@@ -16,13 +16,17 @@
     "s3Key": {
       "Type": "String"
     },
-    "functionautoposterreactapploggingUtilsArn": {
+    "storagemediaStorage2BucketName": {
       "Type": "String",
-      "Default": "functionautoposterreactapploggingUtilsArn"
+      "Default": "storagemediaStorage2BucketName"
     },
     "functionautoposterreactappPythonUtilsArn": {
       "Type": "String",
       "Default": "functionautoposterreactappPythonUtilsArn"
+    },
+    "functionautoposterreactapploggingUtilsArn": {
+      "Type": "String",
+      "Default": "functionautoposterreactapploggingUtilsArn"
     }
   },
   "Conditions": {
@@ -77,6 +81,9 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "STORAGE_MEDIASTORAGE2_BUCKETNAME": {
+              "Ref": "storagemediaStorage2BucketName"
             }
           }
         },
@@ -104,12 +111,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "autoposterreactappLambdaRole23251bc1",
+            "autoposterreactappLambdaRole08bdfb5a",
             {
               "Fn::Join": [
                 "",
                 [
-                  "autoposterreactappLambdaRole23251bc1",
+                  "autoposterreactappLambdaRole08bdfb5a",
                   "-",
                   {
                     "Ref": "env"
@@ -175,6 +182,45 @@
                   }
                 ]
               }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:PutObject"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "storagemediaStorage2BucketName"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
             }
           ]
         }

@@ -1,7 +1,9 @@
 import os
+import sys
 import pytz
 import datetime
-import psycopg2
+sys.path.append('/opt')
+sys.path.append('/lib/python')
 from aws_lambda_powertools import Logger
 
 logger = Logger()

@@ -34,7 +34,7 @@
         },
         "AutoPoster": {
           "deploymentBucketName": "amplify-autoposterreactapp-dev-163316-deployment",
-          "s3Key": "amplify-builds/AutoPoster-71384a5a35395131325a-build.zip"
+          "s3Key": "amplify-builds/AutoPoster-7959543936447874707a-build.zip"
         }
       },
       "storage": {

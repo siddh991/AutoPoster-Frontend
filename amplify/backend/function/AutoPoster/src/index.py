@@ -24,7 +24,7 @@ def create_post_record(conn, cur, company_id, generated_caption, post_at, bucket
     try:
         cur.execute(sql, (company_id, generated_caption, post_at, bucket, key))
         conn.commit()
-        logger.info("Successfully created post record")
+        logger.info("Successfully created post records")
     except Exception as e:
         logger.error("Unable to create post record with caption", exc_info=True)
         return {

@@ -59,11 +59,25 @@
       "dependsOn": [
         {
           "attributes": [
-            "BucketName"
+            "Arn"
           ],
-          "category": "storage",
-          "resourceName": "mediaStorage2"
+          "category": "function",
+          "resourceName": "autoposterreactappPythonUtils"
         },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "autoposterreactapploggingUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "CaptionGenerator": {
+      "build": true,
+      "dependsOn": [
         {
           "attributes": [
             "Arn"
@@ -133,6 +147,30 @@
         {
           "category": "function",
           "resourceName": "AutoPoster"
+        }
+      ]
+    },
+    "AMPLIFY_function_CaptionGenerator_apiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "CaptionGenerator"
+        }
+      ]
+    },
+    "AMPLIFY_function_CaptionGenerator_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "CaptionGenerator"
+        }
+      ]
+    },
+    "AMPLIFY_function_CaptionGenerator_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "CaptionGenerator"
         }
       ]
     },

@@ -80,6 +80,8 @@ def handler(event, context: LambdaContext):
         }
 
     try:
+        env = os.environ['ENV']
+        logger.info(f'env is {env}')
         prompt = get_prompt(conn, cur, company_id, "instagram")
         if not prompt:
             return {
@@ -101,8 +103,9 @@ def handler(event, context: LambdaContext):
         }
 
         logger.info("Invoking Media Describer")
+        logger.info(f"CaptionGenerator-{env} being invoked")
         response = lambda_client.invoke(
-            FunctionName='arn:aws:lambda:us-east-2:365282314190:function:captionGenerator',
+            FunctionName=f'CaptionGenerator-{env}',
             InvocationType='RequestResponse',
             Payload=json.dumps(input_params)
         )

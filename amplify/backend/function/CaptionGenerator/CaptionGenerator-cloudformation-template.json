@@ -23,6 +23,9 @@
     "functionautoposterreactapploggingUtilsArn": {
       "Type": "String",
       "Default": "functionautoposterreactapploggingUtilsArn"
+    },
+    "apiKey": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -55,12 +58,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AutoPoster",
+            "CaptionGenerator",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AutoPoster",
+                  "CaptionGenerator",
                   "-",
                   {
                     "Ref": "env"
@@ -77,6 +80,9 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "api_key": {
+              "Ref": "apiKey"
             }
           }
         },
@@ -104,12 +110,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "autoposterreactappLambdaRole08bdfb5a",
+            "autoposterreactappLambdaRole9e3fce5d",
             {
               "Fn::Join": [
                 "",
                 [
-                  "autoposterreactappLambdaRole08bdfb5a",
+                  "autoposterreactappLambdaRole9e3fce5d",
                   "-",
                   {
                     "Ref": "env"

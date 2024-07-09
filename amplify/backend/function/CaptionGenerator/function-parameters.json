@@ -1,5 +1,4 @@
 {
-  "permissions": {},
   "lambdaLayers": [
     {
       "type": "ProjectLayer",
@@ -14,6 +13,12 @@
       "env": "dev",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
+    }
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "apiKey",
+      "environmentVariableName": "api_key"
     }
   ]
 }

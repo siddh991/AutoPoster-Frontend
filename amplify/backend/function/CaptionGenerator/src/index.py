@@ -122,6 +122,7 @@ def handler(event, context: LambdaContext):
         return 500
 
     image_presigned_url = generate_presigned_url(bucket, key)
+    logger.info(image_presigned_url)
     
     if 'previous_caption' in event["arguments"]:
         caption = update_caption(image_presigned_url, event["arguments"]['previous_caption'], prompt)

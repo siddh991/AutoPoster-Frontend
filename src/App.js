@@ -11,6 +11,7 @@ import Dashboard from './components/dashboard/Dashboard.js';
 import Home from "./components/tiktokOauth/Home";
 import Redirect from "./components/tiktokOauth/Redirect";
 import PrivateRoute from './components/auth/PrivateAuth.js';
+import PromptGenForm from './components/forms/PromptGenForm';
 
 Amplify.configure({...awsconfig, ssr: true});
 
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/tiktok-setup" element={<PrivateRoute element={Home} />} />
             <Route path="/tiktok-redirect" element={<PrivateRoute element={Redirect} />} />
             <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />  {/* Protected Dashboard */}
+            <Route path="/complete-profile" element={<PromptGenForm />} />  {/* Profile Completion Form */}
           </Routes>
         </main>
       </div>

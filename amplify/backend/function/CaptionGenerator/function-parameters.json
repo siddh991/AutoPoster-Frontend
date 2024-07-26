@@ -3,16 +3,16 @@
     {
       "type": "ProjectLayer",
       "resourceName": "autoposterreactapploggingUtils",
-      "env": "dev",
       "version": "Always choose latest version",
-      "isLatestVersionSelected": true
+      "isLatestVersionSelected": true,
+      "env": "dev"
     },
     {
       "type": "ProjectLayer",
       "resourceName": "autoposterreactappPythonUtils",
-      "env": "dev",
       "version": "Always choose latest version",
-      "isLatestVersionSelected": true
+      "isLatestVersionSelected": true,
+      "env": "dev"
     }
   ],
   "environmentVariableList": [

@@ -12,7 +12,16 @@
       ],
       "output": {
         "authConfig": {
-          "additionalAuthenticationProviders": [],
+          "additionalAuthenticationProviders": [
+            {
+              "apiKeyConfig": {
+                "apiKeyExpirationDate": "2024-07-16T02:51:30.455Z",
+                "apiKeyExpirationDays": 7,
+                "description": ""
+              },
+              "authenticationType": "API_KEY"
+            }
+          ],
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
@@ -127,27 +136,6 @@
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
     },
-    "promptInfoStorage": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "autoposterreactappPythonUtils"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "autoposterreactapploggingUtils"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "tiktok": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -240,22 +228,6 @@
         {
           "category": "function",
           "resourceName": "autoposterreactapploggingUtils"
-        }
-      ]
-    },
-    "AMPLIFY_function_promptInfoStorage_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "promptInfoStorage"
-        }
-      ]
-    },
-    "AMPLIFY_function_promptInfoStorage_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "promptInfoStorage"
         }
       ]
     },

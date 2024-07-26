@@ -56,3 +56,33 @@ def conn_database():
     except Exception as e: 
         logger.error(f"Error connecting to database: {e}")
         return None, None
+
+def generate_presigned_url(bucket_name, object_name, expiration=600):
+    """
+    Generate a pre-signed URL to share an S3 object.
+    
+    :param bucket_name: string
+    :param object_name: string
+    :param expiration: Time in seconds for the pre-signed URL to remain valid
+    :return: Pre-signed URL as string, or None if error
+    """
+    s3_client = boto3.client('s3')
+
+    try:
+        presigned_url = s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': bucket_name, 'Key': object_name},
+            ExpiresIn=expiration
+        )
+    except NoCredentialsError:
+        logger.error("Credentials not available.")
+        return None
+    except PartialCredentialsError:
+        logger.error("Incomplete credentials provided.")
+        return None
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        return None
+
+    # The response contains the pre-signed URL
+    return presigned_url

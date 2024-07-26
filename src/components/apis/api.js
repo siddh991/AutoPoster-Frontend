@@ -20,7 +20,7 @@ export const fetchPosts = async (companyId) => {
 
 export const updatePost = async (postId, caption) => {
     const response = await fetch(functionUrl, {
-      method: 'POST', // Or PUT if you prefer
+      method: 'POST', 
       headers: {
         'Content-Type': 'application/json'
       },

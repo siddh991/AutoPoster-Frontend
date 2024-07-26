@@ -58,6 +58,12 @@ def create_entry(details):
         feature_map, caption_tone, caption_formatting, brand_association, prompt
     ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
+
+    prompt_sql = """
+    INSERT INTO prompt (
+        company_id, platform, prompt
+    ) VALUES (%s, %s, %s)
+    """
     
     try:
         cur.execute(sql, (
@@ -66,6 +72,11 @@ def create_entry(details):
             json.dumps(details['uniqueSellingPoints']), details['captionTone'], 
             details['captionFormatting'], details['brandAssociation'], prompt
         ))
+
+        cur.execute(prompt_sql, (
+            details['companyID'], 'instagram', prompt
+        ))
+
         conn.commit()
         logger.info('User details and prompt saved successfully')
         return {
@@ -82,51 +93,69 @@ def create_entry(details):
         cur.close()
         conn.close()
 
-# def update_entry(details):
-#     logger.info('Starting update entry with details: %s', details)
-#     try:
-#         conn, cur = conn_database()
-#         logger.info('Connected to database')
-#     except Exception as e: 
-#         logger.error('Cannot connect to database: %s', e)
-#         return {
-#             'statusCode': 500,
-#             'body': json.dumps({'error': 'Failed to connect to the database'})
-#         }
 
-#     details['uniqueSellingPoints'] = normalize_weights(details['uniqueSellingPoints'])
-#     prompt = generate_prompt(details)
+def update_entry(details):
+    logger.info('Starting update entry with details: %s', details)
+    try:
+        conn, cur = conn_database()
+        logger.info('Connected to database')
+    except Exception as e: 
+        logger.error('Cannot connect to database: %s', str(e))
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': 'Failed to connect to the database'})
+        }
+
+    details['uniqueSellingPoints'] = normalize_weights(details['uniqueSellingPoints'])
+    prompt = generate_prompt(details)
     
-#     sql = """
-#     UPDATE company_metadata SET 
-#         company_name=%s, industry=%s, niche=%s, location=%s, target_audience=%s, 
-#         feature_map=%s, caption_tone=%s, caption_formatting=%s, brand_association=%s, prompt=%s
-#     WHERE company_id=%s
-#     """
-    
-#     try:
-#         cur.execute(sql, (
-#             details['companyName'], details['industry'], details['niche'], 
-#             details['location'], details['targetAudience'], 
-#             json.dumps(details['uniqueSellingPoints']), details['captionTone'], 
-#             details['captionFormatting'], details['brandAssociation'], prompt, 
-#             details['companyID']
-#         ))
-#         conn.commit()
-#         logger.info('User details and prompt updated successfully')
-#         return {
-#             'statusCode': 200,
-#             'body': json.dumps('User details and prompt updated successfully')
-#         }
-#     except Exception as e:
-#         logger.error('Failed to update data: %s', e)
-#         return {
-#             'statusCode': 500,
-#             'body': json.dumps({'error': str(e)})
-#         }
-#     finally:
-#         cur.close()
-#         conn.close()
+    sql = """
+    UPDATE company_metadata SET 
+        company_name=%s, industry=%s, niche=%s, location=%s, target_audience=%s, 
+        feature_map=%s, caption_tone=%s, caption_formatting=%s, brand_association=%s, prompt=%s
+    WHERE company_id=%s
+    """
+    prompt_sql = """
+    UPDATE prompt SET 
+        prompt=%s
+    WHERE company_id=%s AND platform='instagram'
+    """
+
+    try:
+        cur.execute(sql, (
+            details['companyName'] or None, 
+            details['industry'] or None, 
+            details['niche'] or None, 
+            details['location'] or None, 
+            details['targetAudience'] or None, 
+            json.dumps(details['uniqueSellingPoints']) if details['uniqueSellingPoints'] else None, 
+            details['captionTone'] or None, 
+            details['captionFormatting'] or None, 
+            details['brandAssociation'] or None, 
+            prompt or None, 
+            details['companyID']
+        ))
+
+        cur.execute(prompt_sql, (
+            prompt, details['companyID']
+        ))
+
+        conn.commit()
+        logger.info('User details and prompt updated successfully')
+        return {
+            'statusCode': 200,
+            'body': json.dumps('User details and prompt updated successfully')
+        }
+    except Exception as e:
+        logger.error('Failed to update data: %s', str(e))
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+    finally:
+        cur.close()
+        conn.close()
+
 
 def get_table(company_id):
     logger.info('Starting get table for company_id: %s', company_id)
@@ -222,55 +251,3 @@ def handler(event, context):
         }
     
     return response
-
-def update_entry(details):
-    logger.info('Starting update entry with details: %s', details)
-    try:
-        conn, cur = conn_database()
-        logger.info('Connected to database')
-    except Exception as e: 
-        logger.error('Cannot connect to database: %s', str(e))
-        return {
-            'statusCode': 500,
-            'body': json.dumps({'error': 'Failed to connect to the database'})
-        }
-
-    details['uniqueSellingPoints'] = normalize_weights(details['uniqueSellingPoints'])
-    prompt = generate_prompt(details)
-    
-    sql = """
-    UPDATE company_metadata SET 
-        company_name=%s, industry=%s, niche=%s, location=%s, target_audience=%s, 
-        feature_map=%s, caption_tone=%s, caption_formatting=%s, brand_association=%s, prompt=%s
-    WHERE company_id=%s
-    """
-    
-    try:
-        cur.execute(sql, (
-            details['companyName'] or None, 
-            details['industry'] or None, 
-            details['niche'] or None, 
-            details['location'] or None, 
-            details['targetAudience'] or None, 
-            json.dumps(details['uniqueSellingPoints']) if details['uniqueSellingPoints'] else None, 
-            details['captionTone'] or None, 
-            details['captionFormatting'] or None, 
-            details['brandAssociation'] or None, 
-            prompt or None, 
-            details['companyID']
-        ))
-        conn.commit()
-        logger.info('User details and prompt updated successfully')
-        return {
-            'statusCode': 200,
-            'body': json.dumps('User details and prompt updated successfully')
-        }
-    except Exception as e:
-        logger.error('Failed to update data: %s', str(e))
-        return {
-            'statusCode': 500,
-            'body': json.dumps({'error': str(e)})
-        }
-    finally:
-        cur.close()
-        conn.close()

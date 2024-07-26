@@ -23,6 +23,17 @@ const Dashboard = ({ user, signOut }) => {
     }
   };
 
+  const processFile = async ({ file, user }) => {
+    file = file.file;
+    console.log(file);
+    console.log(user);
+    const username = user.username;
+
+    const uniqueFileName = `${username}/${file.name}`;
+
+    return { file, key: uniqueFileName };
+  };
+
   useEffect(() => {
     const checkUserDetailsAndLoadPosts = async () => {
       if (!user) {
@@ -63,7 +74,7 @@ const Dashboard = ({ user, signOut }) => {
     <div className="dashboard-container">
       <h3>Welcome {user.attributes.name}</h3>
       <button onClick={signOut}>Sign Out</button>
-      <UploadSection user={user} />
+      <UploadSection user={user} processFile={processFile}/>
       <PostsTable posts={upcomingPosts} setPosts={setPosts} />
     </div>
   );

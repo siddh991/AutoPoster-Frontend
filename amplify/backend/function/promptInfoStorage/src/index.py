@@ -18,7 +18,7 @@ def generate_prompt(details):
         f"The vibe we want for the captions is {details['captionTone']}. The {details['industry']} should evoke "
         f"a feeling of {details['brandAssociation']}.\n\n"
         f"Generate an Instagram caption and hashtags with the following requirements:\n"
-        f"1. Caption followed by #{details['companyName']}\n"
+        f"1. A relevant caption \n"
         f"2. Up to 10 hashtags optimized to appear on Instagram feeds that will target the {details['targetAudience']} target audience.\n"
         f"3. 200 characters or less\n"
         f"4. Follow the following output template: {details['captionFormatting']}"

@@ -20,7 +20,7 @@
     }
   },
   "Resources": {
-    "LambdaLayerVersion4a2f4730": {
+    "LambdaLayerVersion5a6cb4ce": {
       "Type": "AWS::Lambda::LayerVersion",
       "Properties": {
         "CompatibleRuntimes": [
@@ -30,9 +30,9 @@
           "S3Bucket": {
             "Ref": "deploymentBucketName"
           },
-          "S3Key": "amplify-builds/autoposterreactappPythonUtils-LambdaLayerVersion4a2f4730-build.zip"
+          "S3Key": "amplify-builds/autoposterreactappPythonUtils-LambdaLayerVersion5a6cb4ce-build.zip"
         },
-        "Description": "Updated layer version 2024-07-26T00:23:57.151Z",
+        "Description": "Updated layer version 2024-07-26T18:47:39.503Z",
         "LayerName": {
           "Fn::Sub": [
             "autoposterreactappPythonUtils-${env}",
@@ -47,11 +47,11 @@
       "DeletionPolicy": "Delete",
       "UpdateReplacePolicy": "Retain"
     },
-    "LambdaLayerPermissionPrivate4a2f4730": {
+    "LambdaLayerPermissionPrivate5a6cb4ce": {
       "Type": "AWS::Lambda::LayerVersionPermission",
       "Properties": {
         "Action": "lambda:GetLayerVersion",
-        "LayerVersionArn": "arn:aws:lambda:us-east-2:365282314190:layer:autoposterreactappPythonUtils-dev:21",
+        "LayerVersionArn": "arn:aws:lambda:us-east-2:365282314190:layer:autoposterreactappPythonUtils-dev:22",
         "Principal": {
           "Ref": "AWS::AccountId"
         }
@@ -61,7 +61,7 @@
   "Outputs": {
     "Arn": {
       "Value": {
-        "Ref": "LambdaLayerVersion4a2f4730"
+        "Ref": "LambdaLayerVersion5a6cb4ce"
       }
     }
   }

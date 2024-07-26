@@ -30,7 +30,7 @@ def normalize_weights(unique_selling_points):
     total_importance = sum(usp['importance'] for usp in unique_selling_points) + 5
     
     # Add "what's happening in the image" point
-    unique_selling_points.append({'description': "what's happening in the image", 'importance': 5})
+    unique_selling_points.append({'feature': "what's happening in the image", 'importance': 5})
     
     for usp in unique_selling_points:
         usp['weight'] = usp['importance'] / total_importance

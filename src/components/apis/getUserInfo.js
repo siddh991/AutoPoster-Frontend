@@ -1,4 +1,4 @@
-const functionUrl = 'https://dmncwwkkohwcc3lx6n3ge47dxq0nzfrw.lambda-url.us-east-2.on.aws/';
+const functionUrl = 'https://hye7ieuz7ntbnrhj5gsftoobpq0isedt.lambda-url.us-east-2.on.aws/';
 
 export const checkUserDetails = async (companyId) => {
   const url = new URL(functionUrl);

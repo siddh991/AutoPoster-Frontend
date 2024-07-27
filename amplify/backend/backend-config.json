@@ -152,11 +152,6 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    },
-    "tiktok": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
     }
   },
   "parameters": {
@@ -261,22 +256,6 @@
         {
           "category": "function",
           "resourceName": "promptInfoStorage"
-        }
-      ]
-    },
-    "AMPLIFY_function_tiktok_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "tiktok"
-        }
-      ]
-    },
-    "AMPLIFY_function_tiktok_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "tiktok"
         }
       ]
     },

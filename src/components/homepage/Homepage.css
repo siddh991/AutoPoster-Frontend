@@ -1,5 +1,3 @@
-/* Home.css */
-
 .home-container {
   text-align: center;
 }
@@ -20,15 +18,16 @@
   margin-bottom: 40px;
 }
 
-.login-button {
+.login-button, .waitlist-button {
   padding: 10px 20px;
   font-size: 1.2em;
   background-color: #ff6347;
   border: none;
   color: white;
   cursor: pointer;
+  margin: 10px;  /* Added margin to space the buttons */
 }
 
-.login-button:hover {
+.login-button:hover, .waitlist-button:hover {
   background-color: #ff7b60;
 }

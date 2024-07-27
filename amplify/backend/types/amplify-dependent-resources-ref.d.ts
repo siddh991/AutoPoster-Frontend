@@ -45,6 +45,13 @@ export type AmplifyDependentResourcesAttributes = {
     "autoposterreactapploggingUtils": {
       "Arn": "string"
     },
+    "promptInfoStorage": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "tiktok": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

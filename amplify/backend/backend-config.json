@@ -136,6 +136,27 @@
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
     },
+    "promptInfoStorage": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "autoposterreactappPythonUtils"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "autoposterreactapploggingUtils"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "tiktok": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -228,6 +249,22 @@
         {
           "category": "function",
           "resourceName": "autoposterreactapploggingUtils"
+        }
+      ]
+    },
+    "AMPLIFY_function_promptInfoStorage_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "promptInfoStorage"
+        }
+      ]
+    },
+    "AMPLIFY_function_promptInfoStorage_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "promptInfoStorage"
         }
       ]
     },

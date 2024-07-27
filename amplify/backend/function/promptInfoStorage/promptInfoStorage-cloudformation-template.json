@@ -104,12 +104,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "autoposterreactappLambdaRolee077f248",
+            "autoposterreactappLambdaRolec7f5697f",
             {
               "Fn::Join": [
                 "",
                 [
-                  "autoposterreactappLambdaRolee077f248",
+                  "autoposterreactappLambdaRolec7f5697f",
                   "-",
                   {
                     "Ref": "env"

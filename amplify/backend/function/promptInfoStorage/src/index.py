@@ -1,15 +1,16 @@
 import os
 import sys
 import json
-import logging
 sys.path.append('/opt')
 sys.path.append('/lib/python')
+from aws_lambda_powertools import Logger
+from aws_lambda_powertools.utilities.typing import LambdaContext
 import psycopg2
 from psycopg2.extras import DictCursor
 from get_secret import conn_database
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
+
+logger = Logger()
 
 def generate_prompt(details):
     logger.info('Generating prompt with details: %s', details)

@@ -21,9 +21,6 @@ def generate_prompt(details):
         f"1. A relevant caption \n"
         f"2. Up to 10 hashtags optimized to appear on Instagram feeds that will target the {details['targetAudience']} in {details['location']} target audience.\n"
         f"3. 200 characters or less\n\n"
-        f"Make sure to follow the following output template:\n" 
-        f"{details['captionFormatting']}\n"
-        f"Do not add any quotation marks around the caption."
     )
     return prompt
 

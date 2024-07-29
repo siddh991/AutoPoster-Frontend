@@ -39,9 +39,11 @@ def get_prompt(conn, cur, company_id, platform):
         prompt = cur.fetchone()['prompt']
         logger.info("Successfully retrieved prompt")
 
-        sql = """SELECT feature_map FROM company_metadata WHERE company_id=%s;"""
+        sql = """SELECT feature_map, caption_formatting FROM company_metadata WHERE company_id=%s;"""
         cur.execute(sql, (company_id,))
-        feature_map = cur.fetchone()['feature_map']
+        metadata = cur.fetchone()
+        feature_map = metadata['feature_map']
+        caption_formatting = metadata['caption_formatting']
         logger.info("Successfully retrieved feature_map: %s", feature_map)
     except Exception as e:
         logger.error("Unable to retrieve data for company_id %s", company_id, exc_info=True)
@@ -51,7 +53,12 @@ def get_prompt(conn, cur, company_id, platform):
         features = [fw['feature'] for fw in feature_map]
         weights = [fw['weight'] for fw in feature_map]
         selected_feature = random.choices(features, weights=weights, k=1)[0]
-        prompt += f"\nEmphasize the following: {selected_feature}"
+        prompt += f"\nEmphasize the following: {selected_feature}\n"
+    
+    if caption_formatting: 
+        prompt += f"Make sure to follow the following output template:\n" 
+        prompt += f"{caption_formatting}\n"
+        prompt += f"Do not add any extra quotation marks."
 
     logger.info("ChatGPT prompt: %s", prompt)
     return prompt

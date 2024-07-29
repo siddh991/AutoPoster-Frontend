@@ -1,4 +1,5 @@
 const functionUrl = 'https://n7ovlq2nrf7vntjuggtjyiatx40monlu.lambda-url.us-east-2.on.aws/';
+const generateCaptionUrl = 'https://r44htyo3nx6sntygh3shzlbym40vjoul.lambda-url.us-east-2.on.aws/';
 
 export const fetchPosts = async (companyId) => {
   const url = new URL(functionUrl);
@@ -47,4 +48,31 @@ export const updatePost = async (postId, caption) => {
     }
     return data;
   };
+
+  export const regenerateAICaption = async (postId, previousCaption, feedback = '', bucket, key) => {
+    const response = await fetch(generateCaptionUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        post_id: postId, 
+        previous_caption: previousCaption,
+        feedback: feedback,
+        bucket: bucket,
+        key: key
+      })
+    });
+    
+    const data = await response.json();
+    if (response.status !== 200) {
+      throw new Error(data.error || 'Failed to regenerate caption');
+    }
+    return data.caption;
+  };
+  
+  
+  
+
+  
   

@@ -120,7 +120,7 @@ def get_caption(image_presigned_url, prompt):
 
 def update_caption(image_presigned_url, previous_caption, feedback):
     prompt = "You are a social media caption generator. The current caption you generated for the image generated is: {}. \n Our customer wants this caption modified by following this feedback: {} \nOnly return the caption, nothing else.".format(previous_caption, feedback)
-    return generate_caption(image_presigned_url, prompt)
+    return get_caption(image_presigned_url, prompt)
 
 
 # def handler(event, context: LambdaContext):
@@ -151,53 +151,53 @@ def update_caption(image_presigned_url, previous_caption, feedback):
 #         'statusCode': 200,
 #         'caption': caption
 #     }
-
 def handler(event, context: LambdaContext):
     caption = ''
     logger.info(event)
 
     try:
-        arguments = event["arguments"]
-        
-        # Case 2: Not Bucket, Key, Prompt (Generate Prompt for Future Use)
-        # if "details" in arguments:
-        #     details = arguments['details']
-        #     logger.info("Details: %s", details)
-
-        #     prompt = generate_gpt_prompt(details)
-        #     logger.info("Generated GPT Prompt: %s", prompt)
+        # Check if the data is in the 'body' (for regeneration) or 'arguments' (for initial generation)
+        if 'body' in event:
+            # This is a regeneration request
+            body = json.loads(event['body'])
+            post_id = body['post_id']
+            previous_caption = body['previous_caption']
+            feedback = body.get('feedback', '')
+            bucket = body['bucket']
+            key = body['key']
             
-        #     return {
-        #         'statusCode': 200,
-        #         'prompt': prompt
-        #     }
+            logger.info(f"Processing regeneration request for post_id: {post_id}")
+            image_presigned_url = generate_presigned_url(bucket, key)
+            caption = update_caption(image_presigned_url, previous_caption, feedback)
         
-        # Case 1: Bucket, Key, Prompt
-        bucket = arguments['bucket']
-        logger.info("Media bucket: %s", bucket)
-        key = arguments['key']
-        logger.info("Media key: %s", key)
-        prompt = arguments['prompt']
-        logger.info("Prompt is: %s", prompt)
+        elif 'arguments' in event:
+            # This is an initial generation request
+            arguments = event['arguments']
+            prompt = arguments['prompt']
+            bucket = arguments['bucket']
+            key = arguments['key']
+            
+            logger.info(f"Processing initial generation request")
+            logger.info(f"Media bucket: {bucket}")
+            logger.info(f"Media key: {key}")
+            logger.info(f"Prompt: {prompt}")
 
-        image_presigned_url = generate_presigned_url(bucket, key)
-        logger.info(image_presigned_url)
-        
-        # Case 1a: Update Prompt
-        if 'previous_caption' in arguments:
-            caption = update_caption(image_presigned_url, arguments['previous_caption'], prompt)
-        # Case 1b: Generate Caption
-        else:
+            image_presigned_url = generate_presigned_url(bucket, key)
             caption = get_caption(image_presigned_url, prompt)
+        
+        else:
+            raise ValueError("Invalid event structure")
+
+        logger.info(f"Generated caption: {caption}")
     
     except Exception as e:
-        logger.error("Unable to extract properties from event: %s", str(e))
+        logger.error(f"Error processing request: {str(e)}")
         return {
             'statusCode': 500,
-            'error': str(e)
+            'body': json.dumps({'error': str(e)})
         }
 
     return {
         'statusCode': 200,
-        'caption': caption
+        'body': json.dumps({'caption': caption})
     }

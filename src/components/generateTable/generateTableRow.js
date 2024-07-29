@@ -41,8 +41,8 @@ const GenerateTableRow = ({ post, open, handleExpandClick, handleDeleteClick, ha
 
   const handleAiGenerate = async() => {
     if (aiGenerateCount < maxAiGenerations) {
-      const latestCaption = aiGeneratedCaptions.length > 0 ? aiGeneratedCaptions[aiGeneratedCaptions.length - 1] : post.caption;
-      const aiCaption = await handleRegenerateClick(post.id, latestCaption, feedback);
+      const latestCaption = aiGeneratedCaptions.length > 0 ? aiGeneratedCaptions[aiGeneratedCaptions.length - 1].caption : post.caption;
+      const aiCaption = await handleRegenerateClick(post.id, latestCaption, feedback, post.bucket, post.key);
       if (aiCaption) {
         setAiGeneratedCaptions([...aiGeneratedCaptions, { caption: aiCaption, approved: false }]);
         setAiGenerateCount(aiGenerateCount + 1);

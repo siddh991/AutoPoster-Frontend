@@ -119,23 +119,42 @@ def handler(event, context: LambdaContext):
 
         if response.get('StatusCode') == 200:
             payload = response['Payload'].read().decode('utf-8')
-            logger.info(payload)
+            logger.info(f"Raw payload: {payload}")
             result = json.loads(payload)
-            caption = result['caption']
+            
+            if 'body' in result:
+                body = json.loads(result['body'])
+                if 'caption' in body:
+                    caption = body['caption']
+                    logger.info(f"Generated caption: {caption}")
+                    create_post_record(conn, cur, company_id, caption, post_at, bucket, key)
+                    return {
+                        'statusCode': 200,
+                        'body': json.dumps({'extracted_caption': caption})
+                    }
+                else:
+                    logger.error("Caption not found in the response body")
+            else:
+                logger.error("Body not found in the response")
 
-            logger.info("Generated caption: %s", caption)
-            create_post_record(conn, cur, company_id, caption, post_at, bucket, key)
-
+            logger.error(f"Unexpected response structure: {result}")
             return {
-                'statusCode': 200,
-                'body': json.dumps({'extracted_caption': caption})
+                'statusCode': 500,
+                'body': json.dumps({'error': 'Unexpected response structure from CaptionGenerator'})
             }
         else:
-            logger.error("Invocation failed with status code: %s", response.get('StatusCode'))
+            logger.error(f"Invocation failed with status code: {response.get('StatusCode')}")
             return {
                 'statusCode': 500,
                 'body': json.dumps({'error': f"Invocation failed with status code: {response.get('StatusCode')}"})
             }
+    except Exception as e:
+        logger.error(f"An error occurred: {str(e)}", exc_info=True)
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error': f"An error occurred: {str(e)}"})
+        }
     finally:
         cur.close()
         conn.close()
+

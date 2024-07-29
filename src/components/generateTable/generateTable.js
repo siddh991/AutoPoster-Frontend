@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { API, graphqlOperation } from 'aws-amplify';
 import GenerateTableRow from './generateTableRow'; 
 import { deletePost as deletePostMutation, updatePost as updatePostMutation, generateAICaption as generateAICaptionMutation } from '../../graphql/mutations';
-import { deletePost, updatePost } from '../apis/api.js'; 
+import { deletePost, updatePost, regenerateAICaption} from '../apis/api.js'; 
 
 const PostsTable = ({ posts, setPosts }) => {
   const [open, setOpen] = useState(null);
   const [isAIGenerating, setIsAIGenerating] = useState(false);
+
+  const sortedPosts = useMemo(() => {
+    return [...posts].sort((a, b) => new Date(a.postAt) - new Date(b.postAt));
+  }, [posts]);
 
   const handleExpandClick = (postId, currentCaption) => {
     if (open === postId) {
@@ -58,23 +62,26 @@ const PostsTable = ({ posts, setPosts }) => {
     }
   };
 
-  const handleRegenerateClick = async (postId, previousCaption, feedback = '') => {
+  const handleRegenerateClick = async (postId, previousCaption, feedback = '', bucket, key) => {
     setIsAIGenerating(true);
     try {
-      const post = posts.find(p => p.id === postId);
-      console.log('previous caption is %s, previous bucket is %s', previousCaption, post.bucket)
-      const response = await API.graphql(graphqlOperation(generateAICaptionMutation, { id: postId, previous_caption: previousCaption, bucket: post.bucket, key: post.key, prompt: feedback}));
-      console.log(response.data)
-      const aiCaption = response.data.generateAICaption.caption;
-      console.log(aiCaption)
-      return aiCaption;
+      const newCaption = await regenerateAICaption(postId, previousCaption, feedback, bucket, key);
+      if (newCaption) {
+        const updatedPosts = posts.map(post =>
+          post.id === postId ? { ...post, caption: newCaption } : post
+        );
+        setPosts(updatedPosts);
+      }
+      console.log('Caption regenerated successfully');
+      return newCaption;
     } catch (error) {
-      console.error('Error generating AI caption:', error);
-      return null;
+      console.error('Error regenerating AI caption:', error);
     } finally {
       setIsAIGenerating(false);
     }
   };
+
+
 
   return (
     <TableContainer component={Paper}>
@@ -88,7 +95,7 @@ const PostsTable = ({ posts, setPosts }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-        {posts.map((post) => (
+        {sortedPosts.map((post) => (
           <GenerateTableRow
             key={post.id}
             post={post}

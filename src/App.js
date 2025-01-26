@@ -8,8 +8,9 @@ import Header from './components/header/header.js';
 import Homepage from './components/homepage/Homepage.js';
 import AuthPage from './components/auth/AuthPage.js';
 import Dashboard from './components/dashboard/Dashboard.js';
-import Home from "./components/tiktokOauth/Home";
+import TiktokHome from "./components/tiktokOauth/Home";
 import TiktokRedirect from "./components/tiktokOauth/Redirect";
+import InstagramHome from "./components/instaOauth/Home";
 import InstagramRedirect from "./components/instaOauth/Redirect";
 import PrivateRoute from './components/auth/PrivateAuth.js';
 import PromptGenForm from './components/forms/PromptGenForm';
@@ -29,8 +30,9 @@ export default function App() {
             <Route path="/login" element={<AuthPage />} />  {/* Login/Sign Up Page */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/tiktok-setup" element={<PrivateRoute element={Home} />} />
+            <Route path="/tiktok-setup" element={<PrivateRoute element={TiktokHome} />} />
             <Route path="/tiktok-redirect" element={<PrivateRoute element={TiktokRedirect} />} />
+            <Route path="/instagram-setup" element={<PrivateRoute element={InstagramHome} />} />
             <Route path="/instagram-redirect" element={<PrivateRoute element={InstagramRedirect} />} />
             <Route path="/instagram-deauthorize" element={<InstagramDeauthorize />} />
             <Route path="/instagram-delete" element={<InstagramDelete />} />

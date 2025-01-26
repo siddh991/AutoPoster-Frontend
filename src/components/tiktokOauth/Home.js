@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-const Home = ({ user }) => {
+const TiktokHome = ({ user }) => {
   const request_token = async () => {
     try {
       const response = await axios.get("https://c4gtukrl53e6zmzyoen4i7pprm0hlsel.lambda-url.us-east-2.on.aws/oauth");
@@ -27,4 +27,4 @@ const Home = ({ user }) => {
   );
 };
 
-export default Home;
+export default TiktokHome;

@@ -1,30 +1,25 @@
 import React from "react";
-import axios from "axios";
 
-const Home = ({ user }) => {
-  const request_token = async () => {
-    try {
-      const response = await axios.get("https://c4gtukrl53e6zmzyoen4i7pprm0hlsel.lambda-url.us-east-2.on.aws/oauth");
-      window.location.href = `${response.data.url}`;
-    } catch (error) {
-      console.error("Error requesting TikTok token:", error);
-    }
+const InstagramHome = ({ user }) => {
+  const connectInstagramBusiness = () => {
+    window.location.href = "https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=785546827123900&redirect_uri=https://www.influent.studio/instagram-redirect&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights";
   };
 
   return (
     <div>
-      <h2>TikTok Setup</h2>
+      <h2>Instagram Setup</h2>
       {user ? (
         <div>
           <p>Welcome, {user.attributes.name}!</p>
-          <p>Click the button below to connect your TikTok account:</p>
-          <button onClick={request_token}>Connect TikTok</button>
+          <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
+            <button onClick={connectInstagramBusiness}>Connect Instagram Business</button>
+          </div>
         </div>
       ) : (
-        <p>Please log in to access TikTok setup.</p>
+        <p>Please log in to access social media setup.</p>
       )}
     </div>
   );
 };
 
-export default Home;
+export default InstagramHome;

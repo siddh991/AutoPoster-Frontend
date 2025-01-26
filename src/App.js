@@ -9,9 +9,12 @@ import Homepage from './components/homepage/Homepage.js';
 import AuthPage from './components/auth/AuthPage.js';
 import Dashboard from './components/dashboard/Dashboard.js';
 import Home from "./components/tiktokOauth/Home";
-import Redirect from "./components/tiktokOauth/Redirect";
+import TiktokRedirect from "./components/tiktokOauth/Redirect";
+import InstagramRedirect from "./components/instaOauth/Redirect";
 import PrivateRoute from './components/auth/PrivateAuth.js';
 import PromptGenForm from './components/forms/PromptGenForm';
+import InstagramDeauthorize from './components/instaOauth/Deauthorize';
+import InstagramDelete from './components/instaOauth/Delete';
 
 Amplify.configure({...awsconfig, ssr: true});
 
@@ -27,7 +30,10 @@ export default function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/tiktok-setup" element={<PrivateRoute element={Home} />} />
-            <Route path="/tiktok-redirect" element={<PrivateRoute element={Redirect} />} />
+            <Route path="/tiktok-redirect" element={<PrivateRoute element={TiktokRedirect} />} />
+            <Route path="/instagram-redirect" element={<PrivateRoute element={InstagramRedirect} />} />
+            <Route path="/instagram-deauthorize" element={<InstagramDeauthorize />} />
+            <Route path="/instagram-delete" element={<InstagramDelete />} />
             <Route path="/dashboard" element={<PrivateRoute element={Dashboard} />} />  {/* Protected Dashboard */}
             <Route path="/complete-profile" element={<PromptGenForm />} />  {/* Profile Completion Form */}
           </Routes>

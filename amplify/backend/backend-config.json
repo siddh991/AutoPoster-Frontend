@@ -127,6 +127,11 @@
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
     },
+    "instagram": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "promptInfoStorage": {
       "build": true,
       "dependsOn": [
@@ -240,6 +245,22 @@
         {
           "category": "function",
           "resourceName": "autoposterreactapploggingUtils"
+        }
+      ]
+    },
+    "AMPLIFY_function_instagram_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "instagram"
+        }
+      ]
+    },
+    "AMPLIFY_function_instagram_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "instagram"
         }
       ]
     },

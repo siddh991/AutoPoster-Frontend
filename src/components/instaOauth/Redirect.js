@@ -6,8 +6,14 @@ const InstagramRedirect = () => {
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const code = urlSearchParams.get('code');
-    axios.post("https://c4gtukrl53e6zmzyoen4i7pprm0hlsel.lambda-url.us-east-2.on.aws/tiktokaccesstoken", {
+    axios.post("https://xfup33jui6bgog3r5w5jkydbte0vggjr.lambda-url.us-east-2.on.aws/instagramaccesstoken", {
       code: code,
+    })
+    .then(response => {
+      console.log('Response:', response.data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
   }, []);
   

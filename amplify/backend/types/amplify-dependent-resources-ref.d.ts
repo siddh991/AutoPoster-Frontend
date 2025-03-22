@@ -44,6 +44,13 @@ export type AmplifyDependentResourcesAttributes = {
     "autoposterreactapploggingUtils": {
       "Arn": "string"
     },
+    "instagram": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "promptInfoStorage": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

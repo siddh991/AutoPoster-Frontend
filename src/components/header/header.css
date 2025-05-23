@@ -1,3 +1,6 @@
+/* Header styles now handled entirely by Material-UI sx props */
+/* All styles have been removed to prevent conflicts with the new Material-UI design */
+
 @font-face {
     font-family: Poppins;
     src: url('../fonts/RadiateSans-Regular.70e2fe.woff2') format('woff');

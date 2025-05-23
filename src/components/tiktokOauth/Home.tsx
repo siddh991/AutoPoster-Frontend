@@ -1,7 +1,12 @@
 import React from "react";
 import axios from "axios";
+import { User } from "../../types/user";
 
-const Home = ({ user }) => {
+interface HomeProps {
+  user: User | null;
+}
+
+const Home: React.FC<HomeProps> = ({ user }) => {
   const request_token = async () => {
     try {
       const response = await axios.get("https://c4gtukrl53e6zmzyoen4i7pprm0hlsel.lambda-url.us-east-2.on.aws/oauth");
@@ -16,7 +21,7 @@ const Home = ({ user }) => {
       <h2>TikTok Setup</h2>
       {user ? (
         <div>
-          <p>Welcome, {user.attributes.name}!</p>
+          <p>Welcome, {user.attributes?.name}!</p>
           <p>Click the button below to connect your TikTok account:</p>
           <button onClick={request_token}>Connect TikTok</button>
         </div>

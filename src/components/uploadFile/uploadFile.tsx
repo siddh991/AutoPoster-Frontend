@@ -1,9 +1,14 @@
 import React from 'react';
 import { StorageManager } from '@aws-amplify/ui-react-storage';
+import { UploadSectionProps } from '../../types/props';
 
-const UploadSection = ({ user, processFile }) => (
+/**
+ * UploadSection component for handling file uploads
+ * Uses AWS Amplify's StorageManager for file management
+ */
+const UploadSection: React.FC<UploadSectionProps> = ({ user, processFile }) => (
   <div>
-    <h3 align="left">Upload Photos:</h3>
+    <h3 style={{ textAlign: 'left' }}>Upload Photos:</h3>
     <StorageManager
       acceptedFileTypes={['.jpeg', '.jpg', '.png']}
       accessLevel="public"
